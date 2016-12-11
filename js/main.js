@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('main', ['ngRoute','login','role','group'])
+angular.module('main', ['ngRoute','ui.bootstrap','login','role','group','groupCreate',"groupJoin"])
 .config(function($routeProvider){
 	less.watch();
 	$routeProvider
@@ -13,8 +13,16 @@ angular.module('main', ['ngRoute','login','role','group'])
 		controller: 'roleController'
 	})
 	.when('/group',{
-		templateUrl: 'group.html',
+		templateUrl: 'groupMain.html',
 		controller: 'groupController'
+	})
+	.when('/groupCreate',{
+		templateUrl: 'groupCreate.html',
+		controller: 'groupCreateController'
+	})
+	.when('/groupJoin',{
+		templateUrl: 'groupJoin.html',
+		controller: 'groupJoinController'
 	})
 	.otherwise({
 		redirectTo: '/login'

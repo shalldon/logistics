@@ -1,0 +1,27 @@
+<div>
+	<header class="header">加入协同组</header>
+	<div class="group-join-content">
+		<div class="row">
+			<div class="col-xs-3 row-label">协同组名称</div>
+			<div class="col-xs-9 phone-div">
+				<input type="text" class="form-control" id="number" placeholder="请输入">
+			</div>
+		</div>
+		<div class="row" ng-show="true || (groupList && groupList.length)">
+			<table class="">
+				<tr ng-repeat="group in groupList">
+					<td class="grout-label">
+						{{group.label}}
+					</td>
+					<td class="group-desc">
+						{{group.desc}}
+					</td>
+					<td class="group-action">
+						<button type="button" class="btn btn-primary" ng-click="joinGroup(group.id)">加入</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<footer class="footer"></footer>
+</div>
