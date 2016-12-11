@@ -6,7 +6,7 @@ angular.module('login',[])
 	var $location = $injector.get("$location");
 
 	$scope.login = function(){
-		$location.path("/role")
+		$location.path("/role");
 	};
 
 })

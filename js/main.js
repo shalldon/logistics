@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('main', ['ngRoute','login','role'])
+angular.module('main', ['ngRoute','login','role','group'])
 .config(function($routeProvider){
 	less.watch();
 	$routeProvider
@@ -11,6 +11,10 @@ angular.module('main', ['ngRoute','login','role'])
 	.when('/role',{
 		templateUrl: 'roleSelect.html',
 		controller: 'roleController'
+	})
+	.when('/group',{
+		templateUrl: 'group.html',
+		controller: 'groupController'
 	})
 	.otherwise({
 		redirectTo: '/login'
