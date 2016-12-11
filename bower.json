@@ -1,0 +1,20 @@
+{
+  "name": "bae-nodejs",
+  "description": "The first bae nodejs app!",
+  "main": "",
+  "authors": [
+    "bae"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/shalldon/logistics",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "less": "^2.7.1"
+  }
+}
