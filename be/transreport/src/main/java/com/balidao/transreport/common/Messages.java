@@ -48,6 +48,16 @@ public class Messages {
     public static String NO_JOIN_GROUP_REQUEST_FOUND;
     public static String NO_GROUP_USER_FOUND;
 
+    // Chat Event
+    public static String CHAT_EVENT_TYPE_TEXT;
+    public static String CHAT_EVENT_TYPE_RED_ENVELOPE;
+    public static String CHAT_EVENT_TYPE_REPORT_POSITION;
+    public static String RED_ENVELOPE_TYPE_QUEST;
+    public static String RED_ENVELOPE_TYPE_ORDINARY;
+    public static String RED_ENVELOPE_RULE_DIVIDE_EQUALLY;
+    public static String RED_ENVELOPE_RULE_RANDOM;
+    public static String RED_ENVELOPE_RULE_FIRST_COME_GET_MORE;
+    
     // Privilege
     public static String NO_PRIVILEGE;
 
@@ -87,6 +97,17 @@ public class Messages {
         NO_JOIN_GROUP_REQUEST_FOUND = getMessage("groupuser.no.join.group.request.found");
         NO_GROUP_USER_FOUND = getMessage("groupuser.no.group.user.found");
 
+        CHAT_EVENT_TYPE_TEXT = getMessage("chat.event.type.text");
+        CHAT_EVENT_TYPE_RED_ENVELOPE = getMessage("chat.event.type.red.envelope");
+        CHAT_EVENT_TYPE_REPORT_POSITION = getMessage("chat.event.type.report.position");
+        
+        RED_ENVELOPE_TYPE_QUEST = getMessage("red.envelope.type.quest");
+        RED_ENVELOPE_TYPE_ORDINARY = getMessage("red.envelope.type.ordinary");
+        
+        RED_ENVELOPE_RULE_DIVIDE_EQUALLY = getMessage("red.envelope.rule.divide.equally");
+        RED_ENVELOPE_RULE_RANDOM = getMessage("red.envelope.rule.random");
+        RED_ENVELOPE_RULE_FIRST_COME_GET_MORE = getMessage("red.envelope.rule.first.come.get.more");
+        
         NO_PRIVILEGE = getMessage("permission.noprivilege");
     }
 
