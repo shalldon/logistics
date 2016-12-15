@@ -41,6 +41,9 @@ public class RedEnvelope {
     @Column(name = "remain_size")
     private Integer remainSize;
     
+    @Column(name = "is_expired")
+    private Boolean isExpired;
+    
     @Column(name = "red_envelope_type")
     @Enumerated(EnumType.ORDINAL)
     private RedEnvelopeType redEnvelopeType;
@@ -90,6 +93,14 @@ public class RedEnvelope {
 
     public void setRemainSize(Integer remainSize) {
         this.remainSize = remainSize;
+    }
+    
+    public Boolean getIsExpired() {
+        return isExpired;
+    }
+
+    public void setIsExpired(Boolean isExpired) {
+        this.isExpired = isExpired;
     }
 
     public RedEnvelopeType getRedEnvelopeType() {

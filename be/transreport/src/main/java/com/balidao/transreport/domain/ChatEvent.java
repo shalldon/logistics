@@ -42,7 +42,7 @@ public class ChatEvent {
     private LocalDateTime createdAt;
     
     @Column(name = "is_deleted")
-    private boolean isDeleted;
+    private Boolean isDeleted;
     
     @Column(name = "deleted_at")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
@@ -92,11 +92,11 @@ public class ChatEvent {
         this.createdAt = createdAt;
     }
 
-    public boolean isDeleted() {
+    public Boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(boolean isDeleted) {
+    public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 
