@@ -1,5 +1,10 @@
 package com.balidao.transreport.common;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.Properties;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
@@ -49,8 +54,11 @@ public class Messages {
     // Session
     public static String SESSION_FAILED;
 
+    private Properties messagesProp = new Properties();
+
     @PostConstruct
     public void init() {
+        initLocale();
         VALIDATE_CODE_ALREADY_REQUESTED = getMessage("validate.code.already.request");
         VALIDATE_CODE_REQUIRED = getMessage("validate.code.required");
         VALIDATE_CODE_NOT_MATCH = getMessage("validate.code.not.match");
@@ -77,13 +85,27 @@ public class Messages {
 
         ALREADY_JOINED_GROUP = getMessage("groupuser.already.joined");
         NO_JOIN_GROUP_REQUEST_FOUND = getMessage("groupuser.no.join.group.request.found");
-        NO_GROUP_USER_FOUND = getMessage("group.user.no.group.user.found");
+        NO_GROUP_USER_FOUND = getMessage("groupuser.no.group.user.found");
 
         NO_PRIVILEGE = getMessage("permission.noprivilege");
     }
 
-    // TODO
     private String getMessage(String messageKey) {
-        return messageKey;
+        String value = messagesProp.getProperty(messageKey);
+        if (value == null || value.trim().equals("")) {
+            return messageKey;
+        }
+        return value;
+    }
+
+    private void initLocale() {
+        try {
+            messagesProp.load(new InputStreamReader(
+                    Messages.class.getClassLoader().getResourceAsStream("resource/locale.properties"), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
