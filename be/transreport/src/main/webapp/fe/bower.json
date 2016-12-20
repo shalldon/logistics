@@ -1,0 +1,24 @@
+{
+  "name": "bae-nodejs",
+  "description": "The first bae nodejs app!",
+  "main": "",
+  "authors": [
+    "bae"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/shalldon/logistics",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "less": "^2.7.1",
+    "angular": "angularjs#^1.6.0",
+    "angular-route": "^1.6.0",
+    "ui-bootstrap": "^2.3.1",
+    "angular-bootstrap": "^2.3.1"
+  }
+}
