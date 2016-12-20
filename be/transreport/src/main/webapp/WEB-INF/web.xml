@@ -4,12 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="taotao" version="2.5">
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
 	<!-- 加载spring容器 -->
@@ -51,7 +46,11 @@
 		<servlet-name>transreport-parent</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+	<servlet-mapping>    
+    	<servlet-name>default</servlet-name>    
+    	<url-pattern>/fe/*</url-pattern>    
+	</servlet-mapping>  
+
 	<filter>
 		<filter-name>hibernateFilter</filter-name>
 		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter

@@ -5,23 +5,23 @@ angular.module('main', ['ngRoute','ui.bootstrap','login','role','group','groupCr
 	less.watch();
 	$routeProvider
 	.when('/login', {
-		templateUrl: 'login.html',
+		templateUrl: '/fe/views/login.html',
 		controller: 'loginController'
 	})
 	.when('/role',{
-		templateUrl: 'roleSelect.html',
+		templateUrl: '/fe/views/roleSelect.html',
 		controller: 'roleController'
 	})
 	.when('/group',{
-		templateUrl: 'groupMain.html',
+		templateUrl: '/fe/views/groupMain.html',
 		controller: 'groupController'
 	})
 	.when('/groupCreate',{
-		templateUrl: 'groupCreate.html',
+		templateUrl: '/fe/views/groupCreate.html',
 		controller: 'groupCreateController'
 	})
 	.when('/groupJoin',{
-		templateUrl: 'groupJoin.html',
+		templateUrl: '/fe/views/groupJoin.html',
 		controller: 'groupJoinController'
 	})
 	.otherwise({
