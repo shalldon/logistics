@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import com.balidao.transreport.domain.UserRole;
 import com.balidao.transreport.dto.GroupDto;
 import com.balidao.transreport.dto.GroupUserDto;
 import com.balidao.transreport.dto.InviteUserDto;
+import com.balidao.transreport.dto.LoginDto;
 import com.balidao.transreport.dto.UserDto;
 import com.balidao.transreport.exception.TransreportException;
 import com.balidao.transreport.service.IGroupUserService;
@@ -42,26 +44,26 @@ public class UserController {
             return CommonResponse.fail(e);
         }
     }
-    
+
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public CommonResponse login(String phoneNumber, String validateCode, HttpServletRequest request) {
+    public CommonResponse login(@RequestBody LoginDto loginDto, HttpServletRequest request) {
         try {
-            UserDto user = userService.login(phoneNumber, validateCode);
+            UserDto user = userService.login(loginDto.getPhoneNumber(), loginDto.getValidateCode());
             request.getSession().setAttribute(Constants.USER_SESSION_KEY, user);
             return CommonResponse.success(user);
         } catch (TransreportException e) {
             return CommonResponse.fail(e);
         }
     }
-    
+
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public CommonResponse updateUser(String userName, int userRoleId, HttpServletRequest request) {
+    public CommonResponse updateUser(@RequestBody UserDto userDto, HttpServletRequest request) {
         try {
             UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
-            user.setUserName(userName);
-            user.setUserRole(UserRole.byId(userRoleId));
+            user.setUserName(userDto.getUserName());
+            user.setUserRole(userDto.getUserRole());
             user = userService.updateUser(user);
             request.getSession().setAttribute(Constants.USER_SESSION_KEY, user);
             return CommonResponse.success(user);
@@ -117,11 +119,10 @@ public class UserController {
             return CommonResponse.fail(Messages.NO_USER_FOUND);
         }
     }
-    
+
     @RequestMapping(value = "/quitGroup", method = RequestMethod.GET, consumes = "application/json")
     @ResponseBody
-    public CommonResponse quitGroup(Long groupId, HttpServletRequest request)
-            throws Exception {
+    public CommonResponse quitGroup(Long groupId, HttpServletRequest request) throws Exception {
         UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
         if (user != null) {
             try {
@@ -135,19 +136,19 @@ public class UserController {
             return CommonResponse.fail(Messages.NO_USER_FOUND);
         }
     }
-    
+
     @RequestMapping(value = "/userGroupList", method = RequestMethod.GET, consumes = "application/json")
     @ResponseBody
     public CommonResponse userGroupList(HttpServletRequest request) {
-        UserDto user = (UserDto)request.getSession().getAttribute(Constants.USER_SESSION_KEY);
-        if(user != null) {
+        UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
+        if (user != null) {
             return CommonResponse.success(userService.listGroups(user.getId()));
-            
+
         } else {
             return CommonResponse.fail(Messages.NO_USER_FOUND);
         }
     }
-    
+
     @RequestMapping(value = "/inviteUser", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public CommonResponse inviteUser(InviteUserDto inviteUserDto, HttpServletRequest request) {
