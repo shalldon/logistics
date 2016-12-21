@@ -26,5 +26,17 @@ angular.module('login',[])
 //			console.log(data)
 //		})
 	}
+	
+	$scope.login = function(){
+		$http({method: 'POST',
+			   url: 'login',
+			   data:{
+				   phoneNumber : $scope.phoneNumber,
+				   validateCode: $scope.validateCode
+			   }
+			 }).then(function(data){
+				  console.log(data)
+			 })
+	}
 
 })
