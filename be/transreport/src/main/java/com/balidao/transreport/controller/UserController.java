@@ -1,6 +1,6 @@
 package com.balidao.transreport.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +16,6 @@ import com.balidao.transreport.common.Constants;
 import com.balidao.transreport.common.Messages;
 import com.balidao.transreport.common.SMSUtil;
 import com.balidao.transreport.domain.GroupRole;
-import com.balidao.transreport.domain.UserRole;
 import com.balidao.transreport.dto.GroupDto;
 import com.balidao.transreport.dto.GroupUserDto;
 import com.balidao.transreport.dto.InviteUserDto;
@@ -39,7 +38,8 @@ public class UserController {
     @ResponseBody
     public CommonResponse requestValidateCode(String phoneNumber) {
         try {
-            return CommonResponse.success(userService.requestValidateCode(phoneNumber));
+            userService.requestValidateCode(phoneNumber);
+            return CommonResponse.success();
         } catch (TransreportException e) {
             return CommonResponse.fail(e);
         }
@@ -167,8 +167,10 @@ public class UserController {
 
     @RequestMapping(value = "/removeMember", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public CommonResponse removeMember(Long memberId, Long groupId, HttpServletRequest request) {
+    public CommonResponse removeMember(@RequestBody Map<String, Object> params, HttpServletRequest request) {
         UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
+        Long groupId = (Long)params.get("groupId");
+        Long memberId = (Long)params.get("memberId");
         Boolean isGroupMaster = groupUserService.isGroupMaster(user.getId(), groupId);
         if (!isGroupMaster) {
             return CommonResponse.fail(Messages.NO_PRIVILEGE);

@@ -11,7 +11,8 @@ public enum TransreportExceptionType {
     ALREADY_JOINED_GROUP(Messages.ALREADY_JOINED_GROUP),
     NO_JOIN_GROUP_REQUEST_FOUND(Messages.NO_JOIN_GROUP_REQUEST_FOUND),
     NO_PRIVILEGE(Messages.NO_PRIVILEGE),
-    NO_GROUP_USER_FOUND(Messages.NO_GROUP_USER_FOUND);
+    NO_GROUP_USER_FOUND(Messages.NO_GROUP_USER_FOUND),
+    NO_GROUP_FOUND(Messages.NO_GROUP_FOUND);
     
     private TransreportExceptionType(String messageKey) {
         this.messageKey = messageKey;
