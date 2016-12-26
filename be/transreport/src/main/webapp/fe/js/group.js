@@ -29,4 +29,8 @@ angular.module('group',[])
 		$location.path("/groupCreate");
 	}
 
+	$scope.gotoGroup = function (id) {
+		$location.path("/group/", id);
+  }
+
 })
