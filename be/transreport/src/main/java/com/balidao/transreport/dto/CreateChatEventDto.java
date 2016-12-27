@@ -9,6 +9,13 @@ public class CreateChatEventDto {
     
     private Long groupId;
 
+    // red envelop
+    private Long totalValue;
+    
+    private Integer totalSize;
+    
+    private Integer rule;
+    
     public String getContent() {
         return content;
     }
@@ -24,6 +31,29 @@ public class CreateChatEventDto {
     public void setGroupId(Long groupId) {
         this.groupId = groupId;
     }
-    
+
+    public Long getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(Long totalValue) {
+        this.totalValue = totalValue;
+    }
+
+    public Integer getTotalSize() {
+        return totalSize;
+    }
+
+    public void setTotalSize(Integer totalSize) {
+        this.totalSize = totalSize;
+    }
+
+    public Integer getRule() {
+        return rule;
+    }
+
+    public void setRule(Integer rule) {
+        this.rule = rule;
+    }
     
 }

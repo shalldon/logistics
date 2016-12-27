@@ -2,6 +2,7 @@ package com.balidao.transreport.dto;
 
 import java.util.List;
 
+import com.balidao.transreport.domain.RedEnvelopeRule;
 import com.balidao.transreport.domain.RedEnvelopeType;
 
 /**
@@ -22,6 +23,8 @@ private Long id;
     private Boolean isExpired;
     
     private RedEnvelopeType redEnvelopeType;
+    
+    private RedEnvelopeRule redEnvelopeRule;
     
     private List<RedEnvelopeActionDto> actions;
 
@@ -81,6 +84,14 @@ private Long id;
 
     public void setRedEnvelopeType(RedEnvelopeType redEnvelopeType) {
         this.redEnvelopeType = redEnvelopeType;
+    }
+
+    public RedEnvelopeRule getRedEnvelopeRule() {
+        return redEnvelopeRule;
+    }
+
+    public void setRedEnvelopeRule(RedEnvelopeRule redEnvelopeRule) {
+        this.redEnvelopeRule = redEnvelopeRule;
     }
 
     public List<RedEnvelopeActionDto> getActions() {

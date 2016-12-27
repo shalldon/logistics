@@ -19,4 +19,13 @@ public enum RedEnvelopeRule {
     public String getDisplayName() {
         return displayName;
     }
+    
+    public static RedEnvelopeRule byId(int id) {
+        for(RedEnvelopeRule rule : RedEnvelopeRule.values()) {
+            if(rule.ordinal() == id) {
+                return rule;
+            }
+        }
+        return null;
+    }
 }

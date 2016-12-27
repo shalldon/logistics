@@ -11,4 +11,5 @@ public class Constants {
     
     public static String USER_SESSION_KEY = "user_session_key";
     
+    public static Integer MAX_CHAT_EVENTS_NUMBER = 200;
 }

@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.balidao.transreport.common.CommonResponse;
 import com.balidao.transreport.common.Constants;
 import com.balidao.transreport.common.Messages;
+import com.balidao.transreport.domain.RedEnvelopeRule;
+import com.balidao.transreport.domain.RedEnvelopeType;
 import com.balidao.transreport.dto.CreateChatEventDto;
+import com.balidao.transreport.dto.RedEnvelopeActionDto;
 import com.balidao.transreport.dto.UserDto;
 import com.balidao.transreport.exception.TransreportException;
 import com.balidao.transreport.service.IChatEventService;
@@ -26,13 +29,43 @@ public class ChatEventController {
     @RequestMapping(value = "/createTextEvent", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public CommonResponse createTextEvent(@RequestBody CreateChatEventDto dto, HttpServletRequest request) {
-
         UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
         if (user == null) {
             return CommonResponse.fail(Messages.NO_USER_FOUND);
         }
         try {
-            return CommonResponse.success(chatEventService.createTextEvent(dto.getContent(),  dto.getGroupId(), user.getId()));
+            return CommonResponse
+                    .success(chatEventService.createTextEvent(dto.getContent(), dto.getGroupId(), user.getId()));
+        } catch (TransreportException e) {
+            return CommonResponse.fail(e);
+        }
+    }
+
+    @RequestMapping(value = "/createRedEnvelopeEvent", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseBody
+    public CommonResponse createRedEnvelopeEvent(@RequestBody CreateChatEventDto dto, HttpServletRequest request) {
+        UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
+        if (user == null) {
+            return CommonResponse.fail(Messages.NO_USER_FOUND);
+        }
+        try {
+            return CommonResponse.success(chatEventService.createRedEnvelopeEvent(dto.getContent(), dto.getGroupId(),
+                    user.getId(), dto.getTotalValue(), dto.getTotalSize(), RedEnvelopeType.ORDINARY,
+                    RedEnvelopeRule.byId(dto.getRule())));
+        } catch (TransreportException e) {
+            return CommonResponse.fail(e);
+        }
+    }
+
+    @RequestMapping(value = "/pickRedEnvelope", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResponse pickRedEnvelope(Long redEnvelopeId, HttpServletRequest request) {
+        UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
+        if (user == null) {
+            return CommonResponse.fail(Messages.NO_USER_FOUND);
+        }
+        try {
+            return CommonResponse.success(chatEventService.pickRedEnvelope(redEnvelopeId, user.getId()));
         } catch (TransreportException e) {
             return CommonResponse.fail(e);
         }
@@ -40,7 +73,7 @@ public class ChatEventController {
     
     @RequestMapping(value = "/removeEvent", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResponse createTextEvent(Long eventId, HttpServletRequest request) {
+    public CommonResponse removeEvent(Long eventId, HttpServletRequest request) {
 
         UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
         if (user == null) {
@@ -52,20 +85,20 @@ public class ChatEventController {
             return CommonResponse.fail(e);
         }
     }
-    
+
     @RequestMapping(value = "/listAllEvents", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResponse listAllEvents(Long groupId, Integer startPage, Integer pageSize, HttpServletRequest request) {
+    public CommonResponse listAllEvents(Long groupId, HttpServletRequest request) {
 
         UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
         if (user == null) {
             return CommonResponse.fail(Messages.NO_USER_FOUND);
         }
         try {
-            return CommonResponse.success(chatEventService.listAllEvents(groupId, user.getId(), startPage, pageSize));
+            return CommonResponse.success(chatEventService.listAllEvents(groupId, user.getId()));
         } catch (TransreportException e) {
             return CommonResponse.fail(e);
         }
     }
-    
+
 }

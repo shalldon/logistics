@@ -140,13 +140,13 @@ public class UserService implements IUserService {
             return userDto;
         }
     }
-    
+
     @Override
     public List<GroupUserDto> listGroups(Long userId) {
         User user = userDao.get(userId);
         List<GroupUserDto> groupList = new ArrayList<GroupUserDto>();
-        for(GroupUser groupUser : user.getGroups()) {
-            if(groupUser.getGroupRole() != GroupRole.INACTIVE) {
+        for (GroupUser groupUser : user.getGroups()) {
+            if (groupUser.getGroupRole() != GroupRole.INACTIVE) {
                 groupList.add(GroupUserParser.fromDomainToDto(groupUser));
             }
         }
@@ -178,9 +178,14 @@ public class UserService implements IUserService {
                 user.setRegisterTime(LocalDateTime.now());
                 userDao.save(user);
             }
-            GroupUser groupUser = new GroupUser();
-            groupUser.setUser(user);
-            groupUser.setGroup(group);
+            GroupUser groupUser = groupUserDao.findGroupUser(user.getId(), groupId);
+            if (groupUser == null) {
+                groupUser = new GroupUser();
+                groupUser.setUser(user);
+                groupUser.setGroup(group);
+            } else if (groupUser.getGroupRole() != GroupRole.INACTIVE) {
+                continue;
+            }
             groupUser.setGroupRole(GroupRole.MEMBER);
             groupUserDao.save(groupUser);
 

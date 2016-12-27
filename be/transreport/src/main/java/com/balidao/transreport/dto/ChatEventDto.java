@@ -24,6 +24,8 @@ public class ChatEventDto {
 
     private GroupDto group;
 
+    private Boolean isRedEnvelopEvent;
+    
     public Long getId() {
         return id;
     }
@@ -94,6 +96,14 @@ public class ChatEventDto {
 
     public void setGroup(GroupDto group) {
         this.group = group;
+    }
+
+    public Boolean getIsRedEnvelopEvent() {
+        return isRedEnvelopEvent;
+    }
+
+    public void setIsRedEnvelopEvent(Boolean isRedEnvelopEvent) {
+        this.isRedEnvelopEvent = isRedEnvelopEvent;
     }
     
     

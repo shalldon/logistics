@@ -5,6 +5,6 @@ import com.balidao.transreport.domain.RedEnvelope;
 /**
  * Created by mark on 16-12-26.
  */
-public interface IRedEnvelopDao extends IBaseDao<RedEnvelope> {
+public interface IRedEnvelopeDao extends IBaseDao<RedEnvelope> {
 
 }

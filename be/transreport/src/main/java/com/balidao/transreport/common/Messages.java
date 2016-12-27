@@ -57,6 +57,10 @@ public class Messages {
     public static String RED_ENVELOPE_RULE_DIVIDE_EQUALLY;
     public static String RED_ENVELOPE_RULE_RANDOM;
     public static String RED_ENVELOPE_RULE_FIRST_COME_GET_MORE;
+    public static String NOT_ENOUGH_POINTS;
+    public static String ALREADY_PICKED_RED_ENVELOPE;
+    public static String EXPIRED_RED_ENVELOPE;
+    public static String NO_RED_ENVELOPE_LEFT;
     
     // Privilege
     public static String NO_PRIVILEGE;
@@ -107,7 +111,10 @@ public class Messages {
         RED_ENVELOPE_RULE_DIVIDE_EQUALLY = getMessage("red.envelope.rule.divide.equally");
         RED_ENVELOPE_RULE_RANDOM = getMessage("red.envelope.rule.random");
         RED_ENVELOPE_RULE_FIRST_COME_GET_MORE = getMessage("red.envelope.rule.first.come.get.more");
-        
+        NOT_ENOUGH_POINTS = getMessage("not.enough.points");
+        ALREADY_PICKED_RED_ENVELOPE = getMessage("already.picked.red.envelope");
+        EXPIRED_RED_ENVELOPE = getMessage("expired.red.envelope");
+        NO_RED_ENVELOPE_LEFT = getMessage("no.red.envelope.left");
         NO_PRIVILEGE = getMessage("permission.noprivilege");
     }
 

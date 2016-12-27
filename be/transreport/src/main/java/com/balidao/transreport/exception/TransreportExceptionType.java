@@ -12,7 +12,11 @@ public enum TransreportExceptionType {
     NO_JOIN_GROUP_REQUEST_FOUND(Messages.NO_JOIN_GROUP_REQUEST_FOUND),
     NO_PRIVILEGE(Messages.NO_PRIVILEGE),
     NO_GROUP_USER_FOUND(Messages.NO_GROUP_USER_FOUND),
-    NO_GROUP_FOUND(Messages.NO_GROUP_FOUND);
+    NO_GROUP_FOUND(Messages.NO_GROUP_FOUND),
+    NOT_ENOUGH_POINTS(Messages.NOT_ENOUGH_POINTS),
+    ALREADY_PICKED_RED_ENVELOPE(Messages.ALREADY_PICKED_RED_ENVELOPE),
+    EXPIRED_RED_ENVELOPE(Messages.EXPIRED_RED_ENVELOPE),
+    NO_RED_ENVELOPE_LEFT(Messages.NO_RED_ENVELOPE_LEFT);
     
     private TransreportExceptionType(String messageKey) {
         this.messageKey = messageKey;

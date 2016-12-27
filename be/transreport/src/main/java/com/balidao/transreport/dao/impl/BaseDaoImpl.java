@@ -181,6 +181,14 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
         setParameter(query, args);
         return query.list();
     }
+    
+    public List<T> findList(String hql, int maxResult, Object... args) {
+        hql = initSort(hql);
+        Query query = getSession().createQuery(hql);
+        setParameter(query, args);
+        query.setMaxResults(maxResult);
+        return query.list();
+    }
 
     public List<T> findList(String hql, Map<String, Object> alias) {
         return this.findList(hql, null, alias);

@@ -53,7 +53,7 @@ public class ChatEvent {
     private ChatEventType eventType;
     
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "red_envelope_id", nullable = true)
+    @JoinColumn(name = "red_envelope_id")
     private RedEnvelope redEnvelope;
 
     @ManyToOne(fetch = FetchType.LAZY)

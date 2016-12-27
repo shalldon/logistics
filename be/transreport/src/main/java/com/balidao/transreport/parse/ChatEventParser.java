@@ -4,6 +4,7 @@ import com.balidao.transreport.common.DateUtil;
 import com.balidao.transreport.domain.ChatEvent;
 import com.balidao.transreport.dto.ChatEventDto;
 import com.balidao.transreport.dto.GroupDto;
+import com.balidao.transreport.dto.RedEnvelopeDto;
 import com.balidao.transreport.dto.UserDto;
 
 /**
@@ -28,7 +29,13 @@ public class ChatEventParser {
         group.setGroupName(domain.getGroup().getGroupName());
         dto.setGroup(group);
         dto.setIsDeleted(domain.getIsDeleted());
-//        dto.setRedEnvelope(redEnvelope);
+        if (domain.getRedEnvelope() != null) {
+            dto.setIsRedEnvelopEvent(Boolean.TRUE);
+            RedEnvelopeDto redEnvelop = new RedEnvelopeDto();
+            redEnvelop.setId(domain.getRedEnvelope().getId());
+        } else {
+            dto.setIsRedEnvelopEvent(Boolean.FALSE);
+        }
         return dto;
     }
 }

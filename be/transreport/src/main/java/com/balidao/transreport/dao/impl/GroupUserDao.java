@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import com.balidao.transreport.dao.IGroupUserDao;
 import com.balidao.transreport.domain.GroupUser;
-import org.springframework.stereotype.Repository;
 
 /**
  * Created by mark on 16-12-11.

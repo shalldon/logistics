@@ -93,6 +93,8 @@ public interface IBaseDao<T> {
      */
     public List<T> findList(String hql, Object[] args, Map<String, Object> alias);
 
+    public List<T> findList(String hql, int maxResult, Object... args);
+    
     public List<T> findList(String hql, Map<String, Object> alias);
 
     public List<T> findList(String hql, Object[] args);

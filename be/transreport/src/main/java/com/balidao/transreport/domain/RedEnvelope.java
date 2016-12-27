@@ -48,11 +48,15 @@ public class RedEnvelope {
     @Enumerated(EnumType.ORDINAL)
     private RedEnvelopeType redEnvelopeType;
     
+    @Column(name = "red_envelope_rule")
+    @Enumerated(EnumType.ORDINAL)
+    private RedEnvelopeRule redEnvelopeRule;
+    
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "redEnvelope", cascade = CascadeType.ALL)
     private List<RedEnvelopeAction> actions;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_event_id", nullable = false)
+    @JoinColumn(name = "chat_event_id")
     private ChatEvent chatEvent;
     
     public Long getId() {
@@ -109,6 +113,14 @@ public class RedEnvelope {
 
     public void setRedEnvelopeType(RedEnvelopeType redEnvelopeType) {
         this.redEnvelopeType = redEnvelopeType;
+    }
+
+    public RedEnvelopeRule getRedEnvelopeRule() {
+        return redEnvelopeRule;
+    }
+
+    public void setRedEnvelopeRule(RedEnvelopeRule redEnvelopeRule) {
+        this.redEnvelopeRule = redEnvelopeRule;
     }
 
     public List<RedEnvelopeAction> getActions() {
