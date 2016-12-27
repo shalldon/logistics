@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('main', ['ngRoute','ui.bootstrap','login','role','group','groupCreate',"groupJoin"])
+angular.module('main', ['ngRoute','ui.bootstrap','group','login','role','group','groupCreate',"groupJoin",'groupHome'])
 .config(function($routeProvider){
 	less.watch();
 	$routeProvider
