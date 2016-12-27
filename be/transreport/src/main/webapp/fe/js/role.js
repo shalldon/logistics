@@ -5,8 +5,19 @@ angular.module('role',[])
 
 	var $location = $injector.get("$location");
 
-	$scope.selectRole = function(){
-		$location.path("/group");
+	$scope.selectRole = function(role){
+		
+		$http({
+			method: 'POST',
+			url: 'updateUser',
+			data: {
+				userName : $scope.userName,
+				userRole : role
+			}
+		}).then(function(data){
+			console.log(data)
+			$location.path("/group");
+		})		
 	}
 
 })

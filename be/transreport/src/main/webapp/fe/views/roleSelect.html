@@ -3,13 +3,21 @@
 	<div class="role-content">
 		<div class="row">
 			<div class="col-xs-4">
-				<button type="button" class="btn btn-primary role-button" ng-click="selectRole()">发货方</button>
+				<button type="button" class="btn btn-primary role-button" ng-click="selectRole(0)">发货方</button>
 			</div>
 			<div class="col-xs-4">
-				<button type="button" class="btn btn-success role-button" ng-click="selectRole()">承运方</button>
+				<button type="button" class="btn btn-success role-button" ng-click="selectRole(1)">承运方</button>
 			</div>
 			<div class="col-xs-4 ">
-				<button type="button" class="btn btn-info role-button" ng-click="selectRole()">收货方</button>
+				<button type="button" class="btn btn-info role-button" ng-click="selectRole(2)">收货方</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-3">
+				用户名:
+			</div>
+			<div class="col-xs-9">
+				<input type="text" class="form-control row-input"  ng-model="userName" placeholder="用户名">
 			</div>
 		</div>
 	</div>

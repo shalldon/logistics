@@ -11,12 +11,11 @@ angular.module('login',[])
 	// };
 	
 	$scope.getValidateCode = function(){
-		console.log(1111)
 		$http({method:'GET',
-			   url: ['/requestValidateCode',['phoneNumber',$scope.phoneNumber].join("=")].join("?")
-//			   data:{
-//				   		phoneNumber : $scope.phoneNumber
-//			   		}
+			   url: '/requestValidateCode',
+			   params:{
+				   		phoneNumber : $scope.phoneNumber
+			   		}
 			  }).then(function(data){
 				  console.log(data)
 			  })
@@ -35,6 +34,7 @@ angular.module('login',[])
 				   validateCode: $scope.validateCode
 			   }
 			 }).then(function(data){
+				 $location.path("/role");
 				  console.log(data)
 			 },function(){
 			 	$location.path("/role");
