@@ -1,8 +1,15 @@
 "use strict";
 
-angular.module('group',['ionic'])
-.controller('groupHomeController',function($scope, $routeParams, $http, $injector, $ionicActionSheet){
+angular.module('groupHome',['ionic'])
+.controller('groupHomeController',function($scope, $routeParams, $http, $injector, $ionicActionSheet, $ionicModal){
   console.log("access group/" + $routeParams.id);
+
+  $ionicModal.fromTemplateUrl('say-something-modal-orig.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal){
+    $scope.saySomethingModal = modal;
+  });
 
   const GROUP_ACTIONS = {
     SEND_LOCATION: 0,
@@ -30,6 +37,7 @@ angular.module('group',['ionic'])
             break;
           case GROUP_ACTIONS.SAY_SOMETHING:
             console.log("Action: SAY SOMETHING");
+            $scope.saySomethingModal.show();
             break;
           case GROUP_ACTIONS.SEND_RED_PACKET:
             console.log("Action: SEND RED PACKET");
