@@ -1,3 +1,3 @@
 module.exports = function ( app ) {
-    require('./register')(app);
+    require('./mocal')(app);
 };

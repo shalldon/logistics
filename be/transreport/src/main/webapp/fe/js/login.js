@@ -6,9 +6,9 @@ angular.module('login',[])
 	var $http = $injector.get("$http");
 	var $location = $injector.get("$location");
 
-	$scope.login = function(){
-		$location.path("/role");
-	};
+	// $scope.login = function(){
+	// 	$location.path("/role");
+	// };
 	
 	$scope.getValidateCode = function(){
 		console.log(1111)
@@ -36,6 +36,8 @@ angular.module('login',[])
 			   }
 			 }).then(function(data){
 				  console.log(data)
+			 },function(){
+			 	$location.path("/role");
 			 })
 	}
 

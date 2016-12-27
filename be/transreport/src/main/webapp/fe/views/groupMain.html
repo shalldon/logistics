@@ -5,8 +5,8 @@
 			<div class="col-xs-12 table-responsive">
 				<table class="table">
 					<tbody>
-						<tr ng-repeat="group in groupList">
-							<td class="grout-label">
+						<tr ng-repeat="group in groupList" ng-click="gotoGroup(group.id)">
+							<td class="group-label">
 								{{group.label}}
 							</td>
 							<td class="group-desc">

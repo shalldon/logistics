@@ -24,6 +24,10 @@ angular.module('main', ['ngRoute','ui.bootstrap','login','role','group','groupCr
 		templateUrl: '/fe/views/groupJoin.html',
 		controller: 'groupJoinController'
 	})
+	.when('/group/:id/home',{
+		templateUrl: '/fe/views/groupHome.html',
+		controller: 'groupHomeController'
+	})
 	.otherwise({
 		redirectTo: '/login'
 	});
