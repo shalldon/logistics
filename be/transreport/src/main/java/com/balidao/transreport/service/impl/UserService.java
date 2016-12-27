@@ -94,6 +94,7 @@ public class UserService implements IUserService {
                 user.setPhoneNumber(phoneNumber);
                 user.setRegisterTime(LocalDateTime.now());
                 user.setLoginTime(LocalDateTime.now());
+                user.setPoints(Constants.INITIAL_USER_POINTS);
                 userDao.save(user);
             } else {
                 user.setLoginTime(LocalDateTime.now());
@@ -176,6 +177,7 @@ public class UserService implements IUserService {
                 user = new User();
                 user.setPhoneNumber(phoneNumber);
                 user.setRegisterTime(LocalDateTime.now());
+                user.setPoints(Constants.INITIAL_USER_POINTS);
                 userDao.save(user);
             }
             GroupUser groupUser = groupUserDao.findGroupUser(user.getId(), groupId);

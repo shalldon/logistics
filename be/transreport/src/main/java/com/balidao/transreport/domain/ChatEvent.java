@@ -52,7 +52,7 @@ public class ChatEvent {
     @Enumerated(EnumType.ORDINAL)
     private ChatEventType eventType;
     
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "red_envelope_id")
     private RedEnvelope redEnvelope;
 

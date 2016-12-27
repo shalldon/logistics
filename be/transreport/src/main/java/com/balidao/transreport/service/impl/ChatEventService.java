@@ -109,6 +109,7 @@ public class ChatEventService implements IChatEventService {
         chatEvent.setEventType(ChatEventType.TEXT);
         chatEvent.setGroup(group);
         chatEvent.setIsDeleted(Boolean.FALSE);
+        chatEventDao.save(chatEvent);
         RedEnvelope redEnvelope = new RedEnvelope();
         redEnvelope.setIsExpired(Boolean.FALSE);
         redEnvelope.setRedEnvelopeRule(rule);
@@ -117,8 +118,9 @@ public class ChatEventService implements IChatEventService {
         redEnvelope.setRemainValue(totalValue);
         redEnvelope.setTotalSize(totalSize);
         redEnvelope.setTotalValue(totalValue);
+        redEnvelope.setChatEvent(chatEvent);
+        redEnvelopeDao.save(redEnvelope);
         chatEvent.setRedEnvelope(redEnvelope);
-        chatEventDao.save(chatEvent);
         user.setPoints(user.getPoints() - totalValue);
         userDao.save(user);
         return ChatEventParser.fromDomainToDto(chatEvent);
@@ -129,7 +131,7 @@ public class ChatEventService implements IChatEventService {
     public RedEnvelopeActionDto pickRedEnvelope(Long redEnvelopeId, Long userId) throws TransreportException {
         RedEnvelopeAction pAction = redEnvelopeActionDao.findRedEnvelopeAction(userId, redEnvelopeId);
         if (pAction != null) {
-            throw new TransreportException(TransreportExceptionType.ALREADY_JOINED_GROUP);
+            throw new TransreportException(TransreportExceptionType.ALREADY_PICKED_RED_ENVELOPE);
         }
         RedEnvelope redEnvelope = redEnvelopeDao.get(redEnvelopeId);
         if (redEnvelope.getIsExpired() == Boolean.TRUE) {
@@ -195,7 +197,7 @@ public class ChatEventService implements IChatEventService {
             throw new TransreportException(TransreportExceptionType.NO_PRIVILEGE);
         }
         List<ChatEvent> events = chatEventDao.findList(
-                "from ChatEvent where isDeleted = false and groupId = ? order by createdAt desc",
+                "from ChatEvent where isDeleted = false and group.id = ? order by createdAt desc",
                 Constants.MAX_CHAT_EVENTS_NUMBER, groupId);
         List<ChatEventDto> dtos = new ArrayList<ChatEventDto>();
         for (ChatEvent event : events) {

@@ -31,8 +31,9 @@ public class ChatEventParser {
         dto.setIsDeleted(domain.getIsDeleted());
         if (domain.getRedEnvelope() != null) {
             dto.setIsRedEnvelopEvent(Boolean.TRUE);
-            RedEnvelopeDto redEnvelop = new RedEnvelopeDto();
-            redEnvelop.setId(domain.getRedEnvelope().getId());
+            RedEnvelopeDto redEnvelope = new RedEnvelopeDto();
+            redEnvelope.setId(domain.getRedEnvelope().getId());
+            dto.setRedEnvelope(redEnvelope);
         } else {
             dto.setIsRedEnvelopEvent(Boolean.FALSE);
         }

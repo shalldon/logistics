@@ -15,7 +15,6 @@ import com.balidao.transreport.common.Messages;
 import com.balidao.transreport.domain.RedEnvelopeRule;
 import com.balidao.transreport.domain.RedEnvelopeType;
 import com.balidao.transreport.dto.CreateChatEventDto;
-import com.balidao.transreport.dto.RedEnvelopeActionDto;
 import com.balidao.transreport.dto.UserDto;
 import com.balidao.transreport.exception.TransreportException;
 import com.balidao.transreport.service.IChatEventService;

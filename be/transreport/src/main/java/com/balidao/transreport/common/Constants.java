@@ -12,4 +12,6 @@ public class Constants {
     public static String USER_SESSION_KEY = "user_session_key";
     
     public static Integer MAX_CHAT_EVENTS_NUMBER = 200;
+    
+    public static Long INITIAL_USER_POINTS = 1000l;
 }

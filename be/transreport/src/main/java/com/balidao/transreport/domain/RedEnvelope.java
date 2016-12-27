@@ -28,37 +28,37 @@ public class RedEnvelope {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_red_envelope")
     private Long id;
-    
+
     @Column(name = "total_value")
     private Long totalValue;
-    
+
     @Column(name = "total_size")
     private Integer totalSize;
-    
+
     @Column(name = "remain_value")
     private Long remainValue;
-    
+
     @Column(name = "remain_size")
     private Integer remainSize;
-    
+
     @Column(name = "is_expired")
     private Boolean isExpired;
-    
+
     @Column(name = "red_envelope_type")
     @Enumerated(EnumType.ORDINAL)
     private RedEnvelopeType redEnvelopeType;
-    
+
     @Column(name = "red_envelope_rule")
     @Enumerated(EnumType.ORDINAL)
     private RedEnvelopeRule redEnvelopeRule;
-    
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "redEnvelope", cascade = CascadeType.ALL)
     private List<RedEnvelopeAction> actions;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_event_id")
     private ChatEvent chatEvent;
-    
+
     public Long getId() {
         return id;
     }
@@ -98,7 +98,7 @@ public class RedEnvelope {
     public void setRemainSize(Integer remainSize) {
         this.remainSize = remainSize;
     }
-    
+
     public Boolean getIsExpired() {
         return isExpired;
     }
@@ -138,5 +138,5 @@ public class RedEnvelope {
     public void setChatEvent(ChatEvent chatEvent) {
         this.chatEvent = chatEvent;
     }
-    
+
 }
