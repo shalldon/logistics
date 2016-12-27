@@ -11,6 +11,12 @@ angular.module('groupHome',['ionic'])
     $scope.saySomethingModal = modal;
   });
 
+  $scope.sendSaySomthing = function(saySomthing) {
+    //TODO: saySomething with value of 'undefined' from ui ng-model
+    console.log("say somehting:", saySomthing);
+    $scope.saySomethingModal.hide();
+  };
+
   const GROUP_ACTIONS = {
     SEND_LOCATION: 0,
     SAY_SOMETHING: 1,
