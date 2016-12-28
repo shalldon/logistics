@@ -32,7 +32,7 @@ public class GroupController {
     @Autowired
     private IGroupService groupService;
 
-    @RequestMapping(value = "/getGroups", method = RequestMethod.GET, consumes = "application/json")
+    @RequestMapping(value = "/getGroups", method = RequestMethod.GET)
     @ResponseBody
     public CommonResponse getGroups() throws Exception {
         List<GroupDto> list = groupService.getAllGroups();

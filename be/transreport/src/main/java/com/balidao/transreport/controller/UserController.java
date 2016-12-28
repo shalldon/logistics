@@ -16,6 +16,7 @@ import com.balidao.transreport.common.Constants;
 import com.balidao.transreport.common.Messages;
 import com.balidao.transreport.common.SMSUtil;
 import com.balidao.transreport.domain.GroupRole;
+import com.balidao.transreport.domain.UserRole;
 import com.balidao.transreport.dto.GroupDto;
 import com.balidao.transreport.dto.GroupUserDto;
 import com.balidao.transreport.dto.InviteUserDto;
@@ -59,11 +60,11 @@ public class UserController {
 
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public CommonResponse updateUser(@RequestBody UserDto userDto, HttpServletRequest request) {
+    public CommonResponse updateUser(@RequestBody Map<String, Object> params, HttpServletRequest request) {
         try {
             UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
-            user.setUserName(userDto.getUserName());
-            user.setUserRole(userDto.getUserRole());
+            user.setUserName((String)params.get("userName"));
+            user.setUserRole(UserRole.byId((Integer)params.get("userRole")));
             user = userService.updateUser(user);
             request.getSession().setAttribute(Constants.USER_SESSION_KEY, user);
             return CommonResponse.success(user);
@@ -83,7 +84,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/joinGroup", method = RequestMethod.GET, consumes = "application/json")
+    @RequestMapping(value = "/joinGroup", method = RequestMethod.GET)
     @ResponseBody
     public CommonResponse joinGroup(Long groupId, HttpServletRequest request) throws Exception {
         UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
