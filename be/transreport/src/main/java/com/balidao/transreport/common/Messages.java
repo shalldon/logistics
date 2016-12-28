@@ -61,6 +61,7 @@ public class Messages {
     public static String ALREADY_PICKED_RED_ENVELOPE;
     public static String EXPIRED_RED_ENVELOPE;
     public static String NO_RED_ENVELOPE_LEFT;
+    public static String NO_NEED_TO_REPORT_POSITION;
     
     // Privilege
     public static String NO_PRIVILEGE;
@@ -115,6 +116,8 @@ public class Messages {
         ALREADY_PICKED_RED_ENVELOPE = getMessage("already.picked.red.envelope");
         EXPIRED_RED_ENVELOPE = getMessage("expired.red.envelope");
         NO_RED_ENVELOPE_LEFT = getMessage("no.red.envelope.left");
+        NO_NEED_TO_REPORT_POSITION = getMessage("no.need.to.report.position");
+        
         NO_PRIVILEGE = getMessage("permission.noprivilege");
     }
 

@@ -1,5 +1,6 @@
 package com.balidao.transreport.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.balidao.transreport.domain.RedEnvelopeRule;
@@ -8,24 +9,26 @@ import com.balidao.transreport.domain.RedEnvelopeType;
 /**
  * Created by mark on 16-12-16.
  */
-public class RedEnvelopeDto {
+public class RedEnvelopeDto implements Serializable {
 
-private Long id;
-    
+    private static final long serialVersionUID = 2092330326849537207L;
+
+    private Long id;
+
     private Long totalValue;
-    
+
     private Integer totalSize;
 
     private Long remainValue;
-    
+
     private Integer remainSize;
-    
+
     private Boolean isExpired;
-    
+
     private RedEnvelopeType redEnvelopeType;
-    
+
     private RedEnvelopeRule redEnvelopeRule;
-    
+
     private List<RedEnvelopeActionDto> actions;
 
     private ChatEventDto chatEvent;
@@ -109,5 +112,5 @@ private Long id;
     public void setChatEvent(ChatEventDto chatEvent) {
         this.chatEvent = chatEvent;
     }
-    
+
 }

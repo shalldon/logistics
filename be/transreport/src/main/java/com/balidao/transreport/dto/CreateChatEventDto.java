@@ -1,14 +1,24 @@
 package com.balidao.transreport.dto;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * Created by mark on 16-12-26.
  */
-public class CreateChatEventDto {
+public class CreateChatEventDto implements Serializable {
+
+    private static final long serialVersionUID = -5942252316354003074L;
 
     private String content;
     
     private Long groupId;
 
+    // report position request
+    private List<Long> userIds;
+    
+    private boolean hasRedEnvelop;
+    
     // red envelop
     private Long totalValue;
     
@@ -30,6 +40,22 @@ public class CreateChatEventDto {
 
     public void setGroupId(Long groupId) {
         this.groupId = groupId;
+    }
+
+    public List<Long> getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(List<Long> userIds) {
+        this.userIds = userIds;
+    }
+
+    public boolean isHasRedEnvelop() {
+        return hasRedEnvelop;
+    }
+
+    public void setHasRedEnvelop(boolean hasRedEnvelop) {
+        this.hasRedEnvelop = hasRedEnvelop;
     }
 
     public Long getTotalValue() {

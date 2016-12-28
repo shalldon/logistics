@@ -1,31 +1,34 @@
 package com.balidao.transreport.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.balidao.transreport.domain.ChatEventType;
 
-public class ChatEventDto {
+public class ChatEventDto implements Serializable {
+
+    private static final long serialVersionUID = -6372971474236129316L;
 
     private Long id;
-    
+
     private String content;
-    
+
     private UserDto createdBy;
-    
+
     private Date createdAt;
-    
+
     private Boolean isDeleted;
-    
+
     private Date deletedAt;
-    
+
     private ChatEventType eventType;
-    
+
     private RedEnvelopeDto redEnvelope;
+
+    private ReportPositionRequestDto reportPositionRequest;
 
     private GroupDto group;
 
-    private Boolean isRedEnvelopEvent;
-    
     public Long getId() {
         return id;
     }
@@ -90,6 +93,14 @@ public class ChatEventDto {
         this.redEnvelope = redEnvelope;
     }
 
+    public ReportPositionRequestDto getReportPositionRequest() {
+        return reportPositionRequest;
+    }
+
+    public void setReportPositionRequest(ReportPositionRequestDto reportPositionRequest) {
+        this.reportPositionRequest = reportPositionRequest;
+    }
+
     public GroupDto getGroup() {
         return group;
     }
@@ -98,13 +109,4 @@ public class ChatEventDto {
         this.group = group;
     }
 
-    public Boolean getIsRedEnvelopEvent() {
-        return isRedEnvelopEvent;
-    }
-
-    public void setIsRedEnvelopEvent(Boolean isRedEnvelopEvent) {
-        this.isRedEnvelopEvent = isRedEnvelopEvent;
-    }
-    
-    
 }

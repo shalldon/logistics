@@ -16,7 +16,8 @@ public enum TransreportExceptionType {
     NOT_ENOUGH_POINTS(Messages.NOT_ENOUGH_POINTS),
     ALREADY_PICKED_RED_ENVELOPE(Messages.ALREADY_PICKED_RED_ENVELOPE),
     EXPIRED_RED_ENVELOPE(Messages.EXPIRED_RED_ENVELOPE),
-    NO_RED_ENVELOPE_LEFT(Messages.NO_RED_ENVELOPE_LEFT);
+    NO_RED_ENVELOPE_LEFT(Messages.NO_RED_ENVELOPE_LEFT),
+    NO_NEED_TO_REPORT_POSITION(Messages.NO_NEED_TO_REPORT_POSITION);
     
     private TransreportExceptionType(String messageKey) {
         this.messageKey = messageKey;

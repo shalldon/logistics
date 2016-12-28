@@ -1,11 +1,14 @@
 package com.balidao.transreport.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by mark on 16-12-16.
  */
-public class RedEnvelopeActionDto {
+public class RedEnvelopeActionDto implements Serializable {
+
+    private static final long serialVersionUID = 4009086255002774500L;
 
     private Long id;
     

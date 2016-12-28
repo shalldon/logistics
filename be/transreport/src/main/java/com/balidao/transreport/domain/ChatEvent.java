@@ -56,6 +56,10 @@ public class ChatEvent {
     @JoinColumn(name = "red_envelope_id")
     private RedEnvelope redEnvelope;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "report_position_request_id")
+    private ReportPositionRequest reportPostionRequest;
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
@@ -122,6 +126,14 @@ public class ChatEvent {
 
     public void setRedEnvelope(RedEnvelope redEnvelope) {
         this.redEnvelope = redEnvelope;
+    }
+
+    public ReportPositionRequest getReportPostionRequest() {
+        return reportPostionRequest;
+    }
+
+    public void setReportPostionRequest(ReportPositionRequest reportPostionRequest) {
+        this.reportPostionRequest = reportPostionRequest;
     }
 
     public Group getGroup() {

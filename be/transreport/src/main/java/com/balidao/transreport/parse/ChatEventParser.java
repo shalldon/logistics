@@ -5,6 +5,7 @@ import com.balidao.transreport.domain.ChatEvent;
 import com.balidao.transreport.dto.ChatEventDto;
 import com.balidao.transreport.dto.GroupDto;
 import com.balidao.transreport.dto.RedEnvelopeDto;
+import com.balidao.transreport.dto.ReportPositionRequestDto;
 import com.balidao.transreport.dto.UserDto;
 
 /**
@@ -12,7 +13,7 @@ import com.balidao.transreport.dto.UserDto;
  */
 public class ChatEventParser {
 
-    public static ChatEventDto fromDomainToDto(ChatEvent domain) {
+    public static ChatEventDto fromDomainToDto(ChatEvent domain, boolean detail) {
         ChatEventDto dto = new ChatEventDto();
         dto.setId(domain.getId());
         dto.setContent(domain.getContent());
@@ -30,13 +31,32 @@ public class ChatEventParser {
         dto.setGroup(group);
         dto.setIsDeleted(domain.getIsDeleted());
         if (domain.getRedEnvelope() != null) {
-            dto.setIsRedEnvelopEvent(Boolean.TRUE);
-            RedEnvelopeDto redEnvelope = new RedEnvelopeDto();
-            redEnvelope.setId(domain.getRedEnvelope().getId());
-            dto.setRedEnvelope(redEnvelope);
-        } else {
-            dto.setIsRedEnvelopEvent(Boolean.FALSE);
+            if (detail) {
+                dto.setRedEnvelope(RedEnvelopeParser.fromDomainToDto(domain.getRedEnvelope()));
+            } else {
+                RedEnvelopeDto redEnvelope = new RedEnvelopeDto();
+                redEnvelope.setId(domain.getRedEnvelope().getId());
+                redEnvelope.setTotalSize(domain.getRedEnvelope().getTotalSize());
+                redEnvelope.setRemainSize(domain.getRedEnvelope().getRemainSize());
+                dto.setRedEnvelope(redEnvelope);
+            }
+        }
+        if (domain.getReportPostionRequest() != null) {
+            if (detail) {
+                dto.setReportPositionRequest(
+                        ReportPositionRequestParser.fromDomainToDto(domain.getReportPostionRequest()));
+            } else {
+                ReportPositionRequestDto reportPositionRequest = new ReportPositionRequestDto();
+                reportPositionRequest.setId(domain.getReportPostionRequest().getId());
+                reportPositionRequest.setTotalRequest(domain.getReportPostionRequest().getTotalRequest());
+                reportPositionRequest.setAnsweredRequest(domain.getReportPostionRequest().getAnsweredRequest());
+                dto.setReportPositionRequest(reportPositionRequest);
+            }
         }
         return dto;
+    }
+
+    public static ChatEventDto fromDomainToDto(ChatEvent domain) {
+        return fromDomainToDto(domain, false);
     }
 }
