@@ -4,16 +4,15 @@ angular.module('groupHome',[])
 .controller('groupHomeController',function($scope, $routeParams, $http, $injector, $ionicActionSheet, $ionicModal){
   console.log("access group/" + $routeParams.id);
 
-  $ionicModal.fromTemplateUrl('/fe/views/say-something-modal-orig.html', {
+  $ionicModal.fromTemplateUrl('/fe/templates/say-something-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal){
     $scope.saySomethingModal = modal;
   });
 
-  $scope.sendSaySomthing = function(saySomthing) {
-    //TODO: saySomething with value of 'undefined' from ui ng-model
-    console.log("say somehting:", saySomthing);
+  $scope.sendSaySomthing = function(message) {
+    console.log("say somehting:", message);
     $scope.saySomethingModal.hide();
   };
 

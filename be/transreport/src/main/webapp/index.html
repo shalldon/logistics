@@ -35,22 +35,4 @@
     <script src="/fe/js/groupCreate.js"></script>
     <script src="/fe/js/groupJoin.js"></script>
     <script src="/fe/js/groupHome.js"></script>
-
-    <!-- Ng Templates -->
-    <script id="say-something-modal-orig.html" type="text/ng-template">
-        <ion-modal-view>
-            <ion-header-bar class="bar bar-header bar-positive">
-                <h1 class="title">说两句</h1>
-                <button class="button button-clear button-primary" ng-click="saySomethingModal.hide()">关闭</button>
-            </ion-header-bar>
-            <ion-content class="padding">
-                <div class="list">
-                    <label class="item item-input">
-                        <input ng-model="saySomthing.text" type="text">
-                    </label>
-                    <button class="button button-full button-positive" ng-click="sendSaySomthing(saySomething)">发送</button>
-                </div>
-            </ion-content>
-        </ion-modal-view>
-    </script>
 </html>

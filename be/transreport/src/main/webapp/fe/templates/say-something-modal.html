@@ -1,0 +1,14 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">说两句</h1>
+        <button class="button button-clear button-primary" ng-click="saySomethingModal.hide()">关闭</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="list">
+            <label class="item item-input">
+                <input ng-model="$ctrl.formData.message" type="text">
+            </label>
+            <button class="button button-full button-positive" ng-click="sendSaySomthing($ctrl.formData.message)">发送</button>
+        </div>
+    </ion-content>
+</ion-modal-view>
