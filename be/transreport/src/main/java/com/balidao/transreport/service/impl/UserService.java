@@ -171,7 +171,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public GroupDto inviteUsersToGroup(UserDto masterDto, List<String> phoneList, Long groupId) {
-        Group group = groupDao.findGroupById(groupId);
+        Group group = groupDao.get(groupId);
         for (String phoneNumber : phoneList) {
             User user = userDao.findByPhoneNumber(phoneNumber);
             if (user == null) {

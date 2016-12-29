@@ -152,7 +152,7 @@ public class UserController {
 
     @RequestMapping(value = "/inviteUser", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public CommonResponse inviteUser(InviteUserDto inviteUserDto, HttpServletRequest request) {
+    public CommonResponse inviteUser(@RequestBody InviteUserDto inviteUserDto, HttpServletRequest request) {
         UserDto user = (UserDto) request.getSession().getAttribute(Constants.USER_SESSION_KEY);
         Boolean isGroupMaster = groupUserService.isGroupMaster(user.getId(), inviteUserDto.getGroupId());
         if (!isGroupMaster) {

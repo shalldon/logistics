@@ -3,6 +3,7 @@
 angular.module('groupHome',[])
 .controller('groupHomeController',function($scope, $routeParams, $http, $injector, $ionicActionSheet, $ionicModal){
   console.log("access group/" + $routeParams.id);
+  var $location = $injector.get("$location");
 
   $ionicModal.fromTemplateUrl('/fe/templates/say-something-modal.html', {
     scope: $scope,
@@ -15,6 +16,10 @@ angular.module('groupHome',[])
     console.log("say somehting:", message);
     $scope.saySomethingModal.hide();
   };
+  
+  $scope.backToGroup = function(){
+	$location.path("/group");
+  }
 
   const GROUP_ACTIONS = {
     SEND_LOCATION: 0,
@@ -53,4 +58,8 @@ angular.module('groupHome',[])
       }
     });
   };
+  
+  $scope.gotoInvite = function(){
+	  $location.path(["/userInvite/",$routeParams.id].join(""));
+  }
 });

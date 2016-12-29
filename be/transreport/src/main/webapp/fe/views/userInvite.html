@@ -1,0 +1,22 @@
+<div>
+ 	<div class="bar bar-header bar-assertive">
+        <a class="button icon-left ion-chevron-left button-clear" ng-click="backToDetail()"></a>
+        <h1 class="title">邀请用户</h1>
+        <a class="button icon-right ion-plus button-clear" ng-click="invite()"></a>
+    </div>
+    <div class="content has-header">
+    	 <div class="list">
+    	 	<div class="card" ng-repeat="usr in users">
+               <div class="item item-divider">
+                   <span>姓名：{{usr.userName}}</span>
+               </div>
+               <div class="item item-text-wrap">
+                   <span>电话：{{usr.phone}}</span>
+               </div>
+        	</div>
+    	 </div>	  	
+    </div>
+    <div class="bar bar-footer">
+	  <button type="button" class="btn btn-primary" ng-click="inviteAll()">邀请</button>
+	</div>
+</div>

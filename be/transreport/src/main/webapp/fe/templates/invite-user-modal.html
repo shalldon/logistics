@@ -1,0 +1,17 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">添加用户</h1>
+        <button class="button button-clear button-primary" ng-click="inviteUserModal.hide()">关闭</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="list">
+            <label class="item item-input">
+                <input ng-model="user.userName" type="text" placeholder="用户名">
+            </label>
+            <label class="item item-input">
+                <input ng-model="user.phone" type="text" placeholder="手机号码">
+            </label>
+            <button class="button button-full button-positive" ng-click="addUser()">发送</button>
+        </div>
+    </ion-content>
+</ion-modal-view>

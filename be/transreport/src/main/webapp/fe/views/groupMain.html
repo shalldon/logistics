@@ -1,8 +1,11 @@
 <div>
-	<header class="header">协同</header>
-	<div class="group-content">
+	<header class="bar bar-header bar-assertive">
+		<a class="button icon-left ion-chevron-left button-clear" ng-click="backToGroup()"></a>
+        <h1 class="title">协同</h1>
+	</header>
+	<div class="content has-header">
 		<div class="row">
-			<div class="col-xs-12 table-responsive">
+			<div class="col-xs-12 table-responsive">			
 				<table class="table">
 					<tbody>
 						<tr ng-repeat="group in groupList" ng-click="gotoGroup(group.id)">

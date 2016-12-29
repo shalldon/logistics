@@ -1,6 +1,9 @@
 <div>
-	<header class="header">加入协同组</header>
-	<div class="group-join-content">
+	<header class="bar bar-header bar-assertive">
+	   <a class="button icon-left ion-chevron-left button-clear" ng-click="backToGroup()"></a>
+       <h1 class="title">加入协同组</h1>
+	</header>
+	<div class="content has-header">
 		<div class="row">
 			<div class="col-xs-3 row-label">协同组名称</div>
 			<div class="col-xs-9 phone-div">
@@ -8,19 +11,21 @@
 			</div>
 		</div>
 		<div class="row" ng-show="true || (groupList && groupList.length)">
-			<table class="">
-				<tr ng-repeat="group in groupList">
-					<td class="grout-label">
-						{{group.groupName}}
-					</td>
-					<td class="group-desc">
-						{{group.groupDesc}}
-					</td>
-					<td class="group-action">
-						<button type="button" class="btn btn-primary" ng-click="joinGroup(group.id)">加入</button>
-					</td>
-				</tr>
-			</table>
+			<div class="col-xs-12">
+				<table class="table">
+					<tr ng-repeat="group in groupList">
+						<td class="grout-label">
+							{{group.groupName}}
+						</td>
+						<td class="group-desc">
+							{{group.groupDesc}}
+						</td>
+						<td class="group-action">
+							<button type="button" class="btn btn-primary" ng-click="joinGroup(group.id)">加入</button>
+						</td>
+					</tr>
+				</table>
+			</div>			
 		</div>
 	</div>
 	<footer class="footer"></footer>
