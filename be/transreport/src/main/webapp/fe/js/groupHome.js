@@ -4,6 +4,9 @@ angular.module('groupHome',[])
 .controller('groupHomeController',function($scope, $routeParams, $http, $injector, $ionicActionSheet, $ionicModal){
   console.log("access group/" + $routeParams.id);
   var $location = $injector.get("$location");
+  
+  $scope.message = {};
+  $scope.messages = [];
 
   $ionicModal.fromTemplateUrl('/fe/templates/say-something-modal.html', {
     scope: $scope,
@@ -11,9 +14,41 @@ angular.module('groupHome',[])
   }).then(function(modal){
     $scope.saySomethingModal = modal;
   });
+  
+  $http({
+	  method:"GET",
+	  url:"/listAllEvents",
+	  params:{
+		  groupId : $routeParams.id
+	  }
+  }).then(function(res){
+	  var list = res.data.responseBody;
+	  angular.forEach(list,function(item){
+		  $scope.messages.push({
+			  date : item.createdAt,
+			  text : item.content
+		  })
+	  })
+  })
+  
+  $scope.sendSaySomthing = function(text) {
+    var date = new Date();
+    $scope.message.date = date.toDateString();	
+	 
+	$http({
+		method: "POST",
+		url: "/createTextEvent",
+		data: {
+			content : text,
+			groupId : $routeParams.id
+		}
+	}).then(function(){
+		$scope.messages.push({
+			text :text,
+			date : date.toDateString()
+		});
+	})
 
-  $scope.sendSaySomthing = function(message) {
-    console.log("say somehting:", message);
     $scope.saySomethingModal.hide();
   };
   
@@ -31,8 +66,7 @@ angular.module('groupHome',[])
     var hideSheet = $ionicActionSheet.show({
       buttons: [
         {text: '<i class="icon ion-arrow-shrink"></i> 位置'},
-        {text: '<i class="icon ion-navicon"></i> 说两句'},
-        {text: '<i class="icon ion-heart"></i> 发红包'}
+        {text: '<i class="icon ion-navicon"></i> 说两句'}
       ],
       cancelText: '取消',
       cancel: function() {

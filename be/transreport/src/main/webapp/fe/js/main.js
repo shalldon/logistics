@@ -24,7 +24,7 @@ angular.module('main', ['ngRoute','ui.bootstrap','ionic','group','login','role',
 		templateUrl: '/fe/views/groupJoin.html',
 		controller: 'groupJoinController'
 	})
-	.when('/groupDetail/:id',{
+	.when('/groupHome/:id',{
 		templateUrl: '/fe/views/groupHome.html',
 		controller: 'groupHomeController'
 	})

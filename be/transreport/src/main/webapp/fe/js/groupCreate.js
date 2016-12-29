@@ -6,9 +6,7 @@ angular.module('groupCreate',[])
 	var $uibModal = $injector.get("$uibModal");
 	var $location = $injector.get("$location");
 
-	$scope.openPop = function(){
-		console.log(1111)
-		
+	$scope.openPop = function(){				
 		$uibModal.open({
 	      animation: true,
 	      ariaLabelledBy: 'modal-title',
@@ -38,6 +36,10 @@ angular.module('groupCreate',[])
 
 	$scope.closeModal = function(){
 		$uibModalInstance.close();
+	}
+	
+	$scope.backToGroup = function(){
+		$location.path("/group");
 	}
 
 })

@@ -2,6 +2,8 @@
 
 angular.module('groupJoin',[])
 .controller('groupJoinController',function($scope, $http, $injector){
+	
+	var $location = $injector.get("$location");
 
 	var getGroupList = function(){
 		$http({
@@ -24,5 +26,9 @@ angular.module('groupJoin',[])
 		}).then(function(data){
 			console.log(data)
 		})
+	}
+	
+	$scope.backToGroup = function(){
+		$location.path("/group");
 	}
 })

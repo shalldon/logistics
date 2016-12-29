@@ -13,47 +13,15 @@
             <div class="col col-30">目前成员: 15人</div>
             <a class="button icon-right ion-chevron-right button-calm" ng-click="gotoInvite()">邀请</a>
         </div>
-        <div class="list">
-            <div class="card">
+        
+         <div class="list">
+            <div class="card" ng-repeat="msg in messages">
                 <div class="item item-divider">
                     <i class="icon ion-flag"></i>
-                    <span>2016-12-31</span>
+                    <span>{{msg.date}}</span>
                 </div>
                 <div class="item item-text-wrap">
-                    请司机小伙帮忙上报当前位置。
-                </div>
-                <div class="item item-button-right">
-                    <span class="">已发送至10人</span>
-                    <span class="">9人已反馈</span>
-                    <i class="button ion-chevron-right"></i>
-                </div>
-            </div>
-            <div class="card">
-                <div class="item item-divider">
-                    <i class="icon ion-flag"></i>
-                    <span>2016-12-31</span>
-                </div>
-                <div class="item item-text-wrap">
-                    请司机小伙帮忙上报当前位置。
-                </div>
-                <div class="item item-button-right">
-                    <span class="">已发送至10人</span>
-                    <span class="">9人已反馈</span>
-                    <i class="button ion-chevron-right"></i>
-                </div>
-            </div>
-            <div class="card">
-                <div class="item item-divider">
-                    <i class="icon ion-flag"></i>
-                    <span>2016-12-31</span>
-                </div>
-                <div class="item item-text-wrap">
-                    请司机小伙帮忙上报当前位置。
-                </div>
-                <div class="item item-button-right">
-                    <span class="">已发送至10人</span>
-                    <span class="">9人已反馈</span>
-                    <i class="button ion-chevron-right"></i>
+                    {{msg.text}}
                 </div>
             </div>
         </div>

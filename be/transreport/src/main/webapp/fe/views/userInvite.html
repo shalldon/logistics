@@ -1,6 +1,6 @@
 <div>
  	<div class="bar bar-header bar-assertive">
-        <a class="button icon-left ion-chevron-left button-clear" ng-click="backToDetail()"></a>
+        <a class="button icon-left ion-chevron-left button-clear" ng-click="back()"></a>
         <h1 class="title">邀请用户</h1>
         <a class="button icon-right ion-plus button-clear" ng-click="invite()"></a>
     </div>
@@ -14,9 +14,14 @@
                    <span>电话：{{usr.phone}}</span>
                </div>
         	</div>
-    	 </div>	  	
+    	 </div>	
+    	 <div class="row button-container" ng-show="users && users.length">
+			<div class="col-xs-12">
+				<button type="button" class="btn btn-primary full-button" ng-click="inviteAll()">邀请</button>
+			</div>
+		</div>
     </div>
     <div class="bar bar-footer">
-	  <button type="button" class="btn btn-primary" ng-click="inviteAll()">邀请</button>
+	  
 	</div>
 </div>

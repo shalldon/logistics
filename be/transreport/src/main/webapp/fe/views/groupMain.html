@@ -1,36 +1,24 @@
 <div>
 	<header class="bar bar-header bar-assertive">
-		<a class="button icon-left ion-chevron-left button-clear" ng-click="backToGroup()"></a>
+		<a class="button icon-left ion-chevron-left button-clear" ng-click="back()"></a>
         <h1 class="title">协同</h1>
 	</header>
 	<div class="content has-header">
-		<div class="row">
-			<div class="col-xs-12 table-responsive">			
-				<table class="table">
-					<tbody>
-						<tr ng-repeat="group in groupList" ng-click="gotoGroup(group.id)">
-							<td class="group-label">
-								{{group.groupName}}
-							</td>
-							<td class="group-desc">
-								{{group.groupDesc}}
-							</td>
-							<td class="group-action">
-								<i class="glyphicon glyphicon-chevron-right"></i>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+		<div class="list">
+			<div class="item item-icon-left"  ng-repeat="group in groupList" ng-click="gotoGroup(group.id)">
+			    <i class="icon ion-android-contacts" style="left:11px;"></i>
+			    {{group.groupName}}
+			    <button type="button" class="button button-positive"  style="float:right; ">进入</button>
+			</div>
+		</div>					
+		<div class="row button-container">
+			<div class="col-xs-12">
+				<button type="button" class="btn btn-primary full-button" ng-click="createGroup()">创建协同组</button>
 			</div>
 		</div>
 		<div class="row button-container">
 			<div class="col-xs-12">
-				<button type="button" class="btn btn-primary role-button" ng-click="createGroup()">创建协同组</button>
-			</div>
-		</div>
-		<div class="row button-container">
-			<div class="col-xs-12">
-				<button type="button" class="btn btn-primary role-button" ng-click="joinGroup()">加入一个协同组</button>
+				<button type="button" class="btn btn-primary full-button" ng-click="joinGroup()">加入一个协同组</button>
 			</div>
 		</div>
 	</div>

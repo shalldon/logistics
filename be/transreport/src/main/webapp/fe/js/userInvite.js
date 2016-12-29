@@ -60,5 +60,9 @@ angular.module('userInvite',[])
 			
 		})
 	}
+	
+	$scope.back = function(){
+		$location.path(["/groupHome/",groupId].join(""));
+	}
 
 })

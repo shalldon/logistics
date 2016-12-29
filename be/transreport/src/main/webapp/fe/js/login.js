@@ -6,10 +6,6 @@ angular.module('login',[])
 	var $http = $injector.get("$http");
 	var $location = $injector.get("$location");
 
-	// $scope.login = function(){
-	// 	$location.path("/role");
-	// };
-	
 	$scope.getValidateCode = function(){
 		$http({method:'GET',
 			   url: '/requestValidateCode',
@@ -19,11 +15,6 @@ angular.module('login',[])
 			  }).then(function(data){
 				  console.log(data)
 			  })
-
-//		$http.get("/requestValidateCode",{data:{phoneNumber : $scope.phoneNumber}})
-//		.then(function(data){
-//			console.log(data)
-//		})
 	}
 	
 	$scope.login = function(){
@@ -33,11 +24,12 @@ angular.module('login',[])
 				   phoneNumber : $scope.phoneNumber,
 				   validateCode: $scope.validateCode
 			   }
-			 }).then(function(data){
-				 $location.path("/role");
-				  console.log(data)
+			 }).then(function(res){
+				 var status = res.data.status;
+				 if(status == "SUCCESS"){
+					 $location.path("/role");
+				 }			
 			 },function(){
-			 	$location.path("/role");
 			 })
 	}
 

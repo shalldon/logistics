@@ -41,7 +41,11 @@ angular.module('group',[])
 	}
 
 	$scope.gotoGroup = function(id) {
-		$location.path(["/groupDetail/",id].join(""));
+		$location.path(["/groupHome/",id].join(""));
   }
+	
+	$scope.back = function(){
+		$location.path("/join");
+	}
 
 })
