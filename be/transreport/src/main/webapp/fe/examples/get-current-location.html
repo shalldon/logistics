@@ -9,6 +9,8 @@
     <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
     <script src="//cdn.bootcss.com/underscore.js/1.8.3/underscore.js"></script>
     <script src="//cdn.bootcss.com/ratchet/2.0.2/js/ratchet.js"></script>
+
+    <!-- Documents --- http://lbsyun.baidu.com/index.php?title=webapi/guide/webservice-geocoding -->
     <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=VWZ3o7s6jtLUd1hnbdv3doSP"></script>
 
     <title>地图API Util</title>
@@ -40,7 +42,6 @@
 <script type="text/javascript">
 
   var MapUtil = (function() {
-    const BAIDU_AK = 'VWZ3o7s6jtLUd1hnbdv3doSP';
 
     //关于状态码
     //BMAP_STATUS_SUCCESS	检索成功。对应数值“0”。
@@ -53,122 +54,135 @@
     //BMAP_STATUS_SERVICE_UNAVAILABLE	服务不可用。对应数值“7”。(自 1.1 新增)
     //BMAP_STATUS_TIMEOUT	超时。对应数值“8”。(自 1.1 新增)
 
-    return {
-      getCurrentLocation: function() {
-        return new Promise(function(resolve, reject) {
-          var geolocation = new BMap.Geolocation();
+    const BAIDU_AK = 'VWZ3o7s6jtLUd1hnbdv3doSP';
 
-          geolocation.getCurrentPosition(function(r){
-            if(this.getStatus() == BMAP_STATUS_SUCCESS){
-              console.log("location:", r.point.lng, r.point.lat);
-              resolve([r.point.lng, r.point.lat]);  // location := [ lng, lat ]
-            }
-            else {
-              reject(this.getStatus());
-            }
-          },{enableHighAccuracy: true})
-        });
-      },
-      getAddressListByLocations: function(locations) {
-        return new Promise(function(resolve, reject) {
-          var addressListPromises = [];
-          locations = locations || [];
+    function queryAddress(location) {
+      return new Promise(function(resolve, reject) {
+        if (location.length === 0) {
+          throw "location is incorrect.";
+        }
 
-          locations.forEach(function(location, index) {
-            addressListPromises.push(MapUtil.queryAddress(location));
-          });
-
-          Promise.all(addressListPromises).then(function(dataList) {
-            resolve(dataList.map(function(data) {
-              return data.result.formatted_address;
-            })).catch(function(reason) {
-              reject(reason);
-            });
-          });
-        });
-      },
-      queryAddress: function(location) {
-        return new Promise(function(resolve, reject) {
-          if (location.length === 0) {
-            throw "location is incorrect.";
+        return $.ajax('http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=' +
+          location[1] + ',' + location[0] + '&output=json&pois=1&ak=' + BAIDU_AK, {
+          method: 'get',
+          dataType: 'jsonp',
+          success: function(data) {
+            resolve(data);
+          },
+          error: function(error) {
+            reject(error);
           }
+        });
+      });
+    }
 
-          return $.ajax('http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=' +
-            location[1] + ',' + location[0] + '&output=json&pois=1&ak=' + BAIDU_AK, {
-            method: 'get',
-            dataType: 'jsonp',
-            success: function(data) {
-              resolve(data);
-            },
-            error: function(error) {
-              reject(error);
-            }
+    function getCurrentLocation() {
+      return new Promise(function(resolve, reject) {
+        var geolocation = new BMap.Geolocation();
+
+        geolocation.getCurrentPosition(function(r){
+          if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            console.log("location:", r.point.lng, r.point.lat);
+            resolve([r.point.lng, r.point.lat]);  // location := [ lng, lat ]
+          }
+          else {
+            reject(this.getStatus());
+          }
+        },{enableHighAccuracy: true})
+      });
+    }
+
+    function getAddressListByLocations(locations) {
+      return new Promise(function(resolve, reject) {
+        var addressListPromises = [];
+        locations = locations || [];
+
+        locations.forEach(function(location, index) {
+          addressListPromises.push(queryAddress(location));
+        });
+
+        Promise.all(addressListPromises).then(function(dataList) {
+          resolve(dataList.map(function(data) {
+            return data.result.formatted_address;
+          })).catch(function(reason) {
+            reject(reason);
           });
         });
-      }
+      });
+    }
+
+    return {
+      getCurrentLocation: getCurrentLocation,
+      getAddressListByLocations: getAddressListByLocations
     };
   })();
 
-  function store(key, value) {
-    if (typeof value === 'undefined') {
-      return JSON.parse(localStorage.getItem(key));
-    } else {
-      localStorage.setItem(key, JSON.stringify(value));
+  var main = (function MyDEMO() {
+    function store(key, value) {
+      if (typeof value === 'undefined') {
+        return JSON.parse(localStorage.getItem(key));
+      } else {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
     }
-  }
 
-  function restore(key) {
-    localStorage.clear(key || null);
-  }
+    function restore(key) {
+      localStorage.clear(key || null);
+    }
 
-  function renderList() {
-    $('#location-list').html(
-      _.template($('#tpl_demo').html())({
-        locations: store('locations') || []
-      })
-    );
-  }
+    function renderList() {
+      $('#location-list').html(
+        _.template($('#tpl_demo').html())({
+          locations: store('locations') || []
+        })
+      );
+    }
 
-  function renderAddressList(addressList) {
-    $('#address-list').html(
-      _.template($('#tpl_address_list').html())({
-        addressList: addressList || []
-      })
-    );
-  }
+    function renderAddressList(addressList) {
+      $('#address-list').html(
+        _.template($('#tpl_address_list').html())({
+          addressList: addressList || []
+        })
+      );
+    }
 
-  function main() {
-    restore();
-    $('#loading1').hide();
-    $('#loading2').hide();
+    function main() {
+      restore();
+      $('#loading1').hide();
 
-    $('#get-location-btn').on('click', function() {
-      $('#loading1').show();
+      $('#get-location-btn').on('click', function() {
+        $('#loading1').show();
 
-      MapUtil.getCurrentLocation().then(function handleLocation(loc) {
-        var locations = store('locations') || [];
-        locations.push(loc);
-        store('locations', locations);
+        MapUtil.getCurrentLocation().then(function handleLocation(loc) {
+          var locations = store('locations') || [];
+          locations.push(loc);
+          store('locations', locations);
 
-        renderList();
-        $('#loading1').hide();
-      }, function(err) {
-        console.error(err);
-        $('#loading1').hide();
+          renderList();
+          $('#loading1').hide();
+        }, function(err) {
+          console.error(err);
+          $('#loading1').hide();
+        });
       });
-    });
 
-    $('#get-address-list-btn').on('click', function() {
-      $('#loading2').show();
+      $('#loading2').hide();
 
-      MapUtil.getAddressListByLocations(store('locations')).then(function (addressList) {
-        renderAddressList(addressList);
-        $('#loading2').hide();
+      $('#get-address-list-btn').on('click', function() {
+        $('#loading2').show();
+
+        MapUtil.getAddressListByLocations(store('locations')).then(function (addressList) {
+          renderAddressList(addressList);
+          $('#loading2').hide();
+        });
       });
-    });
 
-    renderList();
-  }
+      renderList();
+    }
 
+    return main;
+  })();
+
+  // Run DEMO SHOW to MapUtil
   main();
 </script>
