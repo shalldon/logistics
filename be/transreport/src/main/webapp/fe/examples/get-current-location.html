@@ -16,9 +16,10 @@
     <title>地图API Util</title>
 </head>
 <body>
-    <button id="get-location-btn">获取最新位置 <span id="loading1">(Loading...)</span></button>
+    <div id="loading1">Loading...</div>
+    <button id="get-location-btn">获取最新位置</button>
     <div id="location-list"></div>
-    <button id="get-address-list-btn">获取最新地址信息 <span id="loading2">(Loading...)</span></button>
+    <button id="get-address-list-btn">获取最新地址信息</button>
     <div id="address-list"></div>
 </body>
 </html>
@@ -118,6 +119,21 @@
   })();
 
   var main = (function MyDEMO() {
+
+    $('#loading1').hide();
+
+    $.ajax = (function() {
+      var count = 0;
+      var oldAjax = $.ajax;
+
+      return function() {
+        ++count && $('#loading1').show();
+        oldAjax.apply($, arguments).always(function() {
+          --count || $('#loading1').hide();
+        });
+      };
+    })();
+
     function store(key, value) {
       if (typeof value === 'undefined') {
         return JSON.parse(localStorage.getItem(key));
@@ -148,32 +164,21 @@
 
     function main() {
       restore();
-      $('#loading1').hide();
-
       $('#get-location-btn').on('click', function() {
-        $('#loading1').show();
-
         MapUtil.getCurrentLocation().then(function handleLocation(loc) {
           var locations = store('locations') || [];
           locations.push(loc);
           store('locations', locations);
 
           renderList();
-          $('#loading1').hide();
         }, function(err) {
           console.error(err);
-          $('#loading1').hide();
         });
       });
 
-      $('#loading2').hide();
-
       $('#get-address-list-btn').on('click', function() {
-        $('#loading2').show();
-
         MapUtil.getAddressListByLocations(store('locations')).then(function (addressList) {
           renderAddressList(addressList);
-          $('#loading2').hide();
         });
       });
 
