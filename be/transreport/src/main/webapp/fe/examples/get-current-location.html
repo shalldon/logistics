@@ -2,26 +2,48 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-        body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
-        #allmap {height:500px; width: 100%;}
-        #control{width:100%;}
-    </style>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <link href="//cdn.bootcss.com/ratchet/2.0.2/css/ratchet.css" rel="stylesheet">
+
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
+    <script src="//cdn.bootcss.com/underscore.js/1.8.3/underscore.js"></script>
+    <script src="//cdn.bootcss.com/ratchet/2.0.2/js/ratchet.js"></script>
+
+    <!-- Documents --- http://lbsyun.baidu.com/index.php?title=webapi/guide/webservice-geocoding -->
     <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=VWZ3o7s6jtLUd1hnbdv3doSP"></script>
-    <title>设置线、面可编辑</title>
+
+    <title>地图API Util</title>
 </head>
 <body>
-<div id="allmap"></div>
-<div id="control">
-    <button onclick = "polyline.enableEditing();polygon.enableEditing();">开启线、面编辑功能</button>
-    <button onclick = "polyline.disableEditing();polygon.disableEditing();">关闭线、面编辑功能</button>
-</div>
+    <div id="loading1">Loading...</div>
+    <button id="get-location-btn">获取最新位置</button>
+    <div id="location-list"></div>
+    <button id="get-address-list-btn">获取最新地址信息</button>
+    <div id="address-list"></div>
 </body>
 </html>
+
+<script type="text/template" id="tpl_demo">
+    <ul>
+        <% locations.forEach(function(loc) { %>
+        <li><%= loc %></li>
+        <% }) %>
+    </ul>
+</script>
+
+<script type="text/template" id="tpl_address_list">
+    <ul>
+        <% addressList.forEach(function(addr) { %>
+        <li><%= addr %></li>
+        <% }) %>
+    </ul>
+</script>
+
 <script type="text/javascript">
 
   var MapUtil = (function() {
+
     //关于状态码
     //BMAP_STATUS_SUCCESS	检索成功。对应数值“0”。
     //BMAP_STATUS_CITY_LIST	城市列表。对应数值“1”。
@@ -33,63 +55,139 @@
     //BMAP_STATUS_SERVICE_UNAVAILABLE	服务不可用。对应数值“7”。(自 1.1 新增)
     //BMAP_STATUS_TIMEOUT	超时。对应数值“8”。(自 1.1 新增)
 
-    return {
-      getCurrentLocation: function() {
-        return new Promise(function(resolve, reject) {
-          var geolocation = new BMap.Geolocation();
+    const BAIDU_AK = 'VWZ3o7s6jtLUd1hnbdv3doSP';
 
-          geolocation.getCurrentPosition(function(r){
-            if(this.getStatus() == BMAP_STATUS_SUCCESS){
-              console.log("location:", r.point.lng, r.point.lat);
-              resolve(r.point);
-            }
-            else {
-              reject(this.getStatus());
-            }
-          },{enableHighAccuracy: true})
+    function queryAddress(location) {
+      return new Promise(function(resolve, reject) {
+        if (location.length === 0) {
+          throw "location is incorrect.";
+        }
+
+        return $.ajax('http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=' +
+          location[1] + ',' + location[0] + '&output=json&pois=1&ak=' + BAIDU_AK, {
+          method: 'get',
+          dataType: 'jsonp',
+          success: function(data) {
+            resolve(data);
+          },
+          error: function(error) {
+            reject(error);
+          }
         });
-      }
+      });
+    }
+
+    function getCurrentLocation() {
+      return new Promise(function(resolve, reject) {
+        var geolocation = new BMap.Geolocation();
+
+        geolocation.getCurrentPosition(function(r){
+          if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            console.log("location:", r.point.lng, r.point.lat);
+            resolve([r.point.lng, r.point.lat]);  // location := [ lng, lat ]
+          }
+          else {
+            reject(this.getStatus());
+          }
+        },{enableHighAccuracy: true})
+      });
+    }
+
+    function getAddressListByLocations(locations) {
+      return new Promise(function(resolve, reject) {
+        var addressListPromises = [];
+        locations = locations || [];
+
+        locations.forEach(function(location, index) {
+          addressListPromises.push(queryAddress(location));
+        });
+
+        Promise.all(addressListPromises).then(function(dataList) {
+          resolve(dataList.map(function(data) {
+            return data.result.formatted_address;
+          })).catch(function(reason) {
+            reject(reason);
+          });
+        });
+      });
+    }
+
+    return {
+      getCurrentLocation: getCurrentLocation,
+      getAddressListByLocations: getAddressListByLocations
     };
   })();
 
-  function handleLocation(point) {
-    var lng = point.lng, lat = point.lat;
-    var convertor = new BMap.Convertor();
-    var currentPoint = new BMap.Point(lng, lat);
-    var pointArr = [
-      currentPoint,
-      new BMap.Point(lng+0.05, lat+0.05),
-      new BMap.Point(lng, lat+0.1)
-    ];
+  var main = (function MyDEMO() {
 
-    convertor.translate(pointArr, 1, 5, function(data) {
-      var baiduPath = [];
+    $('#loading1').hide();
 
-      if (data.status == 0) {
-        for (var i = 0; i < data.points.length; i++) {
-          baiduPath.push(data.points[i]);
-        }
+    $.ajax = (function() {
+      var count = 0;
+      var oldAjax = $.ajax;
+
+      return function() {
+        ++count && $('#loading1').show();
+        oldAjax.apply($, arguments).always(function() {
+          --count || $('#loading1').hide();
+        });
+      };
+    })();
+
+    function store(key, value) {
+      if (typeof value === 'undefined') {
+        return JSON.parse(localStorage.getItem(key));
+      } else {
+        localStorage.setItem(key, JSON.stringify(value));
       }
-      else {
-        console.log("error:", data.message);
-      }
+    }
 
-      console.log("info:", data.points);
+    function restore(key) {
+      localStorage.clear(key || null);
+    }
 
-      var map = new BMap.Map("allmap");
-      map.centerAndZoom(data.points[0], 12);
-      map.enableScrollWheelZoom();
+    function renderList() {
+      $('#location-list').html(
+        _.template($('#tpl_demo').html())({
+          locations: store('locations') || []
+        })
+      );
+    }
 
-      map.addOverlay(new BMap.Polyline(baiduPath, {
-        strokeColor:"blue",
-        strokeWeight:2,
-        strokeOpacity:0.5
-      }));   //增加折线
-    });
-  }
+    function renderAddressList(addressList) {
+      $('#address-list').html(
+        _.template($('#tpl_address_list').html())({
+          addressList: addressList || []
+        })
+      );
+    }
 
-  // 百度地图API功能
-  MapUtil.getCurrentLocation().then(handleLocation, function(err) {
-    console.error(err);
-  });
+    function main() {
+      restore();
+      $('#get-location-btn').on('click', function() {
+        MapUtil.getCurrentLocation().then(function handleLocation(loc) {
+          var locations = store('locations') || [];
+          locations.push(loc);
+          store('locations', locations);
+
+          renderList();
+        }, function(err) {
+          console.error(err);
+        });
+      });
+
+      $('#get-address-list-btn').on('click', function() {
+        MapUtil.getAddressListByLocations(store('locations')).then(function (addressList) {
+          renderAddressList(addressList);
+        });
+      });
+
+      renderList();
+    }
+
+    return main;
+  })();
+
+  // Run DEMO SHOW to MapUtil
+  main();
 </script>
