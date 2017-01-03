@@ -4,39 +4,37 @@ angular.module('main', ['ngRoute','ui.bootstrap','ionic','group','login','role',
 .config(function($routeProvider){
 	less.watch();
 	$routeProvider
-	.when(apiRoot + '/login', {
+	.when('/login', {
 		templateUrl: '/fe/views/login.html',
 		controller: 'loginController'
 	})
-	.when(apiRoot + '/role',{
+	.when('/role',{
 		templateUrl: '/fe/views/roleSelect.html',
 		controller: 'roleController'
 	})
-	.when(apiRoot + '/group',{
+	.when('/group',{
 		templateUrl: '/fe/views/groupMain.html',
 		controller: 'groupController'
 	})
-	.when(apiRoot + '/groupCreate',{
+	.when('/groupCreate',{
 		templateUrl: '/fe/views/groupCreate.html',
 		controller: 'groupCreateController'
 	})
-	.when(apiRoot + '/groupJoin',{
+	.when('/groupJoin',{
 		templateUrl: '/fe/views/groupJoin.html',
 		controller: 'groupJoinController'
 	})
-	.when(apiRoot + '/groupHome/:id',{
+	.when('/groupHome/:id',{
 		templateUrl: '/fe/views/groupHome.html',
 		controller: 'groupHomeController'
 	})
-	.when(apiRoot + '/userInvite/:id',{
+	.when('/userInvite/:id',{
 		templateUrl: '/fe/views/userInvite.html',
 		controller: 'userInviteController'
 	})
 	.otherwise({
-		redirectTo: apiRoot + '/login'
+		redirectTo: '/login'
 	});
 })
 .controller('mainController',function($scope, $http){
-
-
 })
