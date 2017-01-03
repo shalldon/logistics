@@ -29,6 +29,6 @@ angular.module('groupJoin',[])
 	}
 	
 	$scope.backToGroup = function(){
-		$location.path("/group");
+		$location.path(apiRoot + "/group");
 	}
 })

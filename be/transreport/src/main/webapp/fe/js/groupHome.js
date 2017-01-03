@@ -17,7 +17,7 @@ angular.module('groupHome',[])
   
   $http({
 	  method:"GET",
-	  url:"/listAllEvents",
+	  url:apiRoot + "/listAllEvents",
 	  params:{
 		  groupId : $routeParams.id
 	  }
@@ -37,7 +37,7 @@ angular.module('groupHome',[])
 	 
 	$http({
 		method: "POST",
-		url: "/createTextEvent",
+		url: apiRoot + "/createTextEvent",
 		data: {
 			content : text,
 			groupId : $routeParams.id
@@ -53,7 +53,7 @@ angular.module('groupHome',[])
   };
   
   $scope.backToGroup = function(){
-	$location.path("/group");
+	$location.path(apiRoot + "/group");
   }
 
   const GROUP_ACTIONS = {
@@ -94,6 +94,6 @@ angular.module('groupHome',[])
   };
   
   $scope.gotoInvite = function(){
-	  $location.path(["/userInvite/",$routeParams.id].join(""));
+	  $location.path([apiRoot + "/userInvite/",$routeParams.id].join(""));
   }
 });

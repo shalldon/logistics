@@ -33,19 +33,19 @@ angular.module('group',[])
 	getGroupList();
 
 	$scope.joinGroup = function(){
-		$location.path("/groupJoin");
+		$location.path(apiRoot + "/groupJoin");
 	}
 
 	$scope.createGroup = function(){
-		$location.path("/groupCreate");
+		$location.path(apiRoot + "/groupCreate");
 	}
 
 	$scope.gotoGroup = function(id) {
-		$location.path(["/groupHome/",id].join(""));
+		$location.path([apiRoot + "/groupHome/",id].join(""));
   }
 	
 	$scope.back = function(){
-		$location.path("/join");
+		$location.path(apiRoot + "/join");
 	}
 
 })

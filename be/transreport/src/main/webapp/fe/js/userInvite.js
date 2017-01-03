@@ -51,7 +51,7 @@ angular.module('userInvite',[])
 		}
 		$http({
 			method:"POST",
-			url:"/inviteUser",
+			url:apiRoot + "/inviteUser",
 			data:{
 				groupId : groupId,
 				phoneList: phoneList
@@ -62,7 +62,7 @@ angular.module('userInvite',[])
 	}
 	
 	$scope.back = function(){
-		$location.path(["/groupHome/",groupId].join(""));
+		$location.path([apiRoot + "/groupHome/",groupId].join(""));
 	}
 
 })

@@ -16,7 +16,7 @@ angular.module('role',[])
 			}
 		}).then(function(data){
 			console.log(data)
-			$location.path("/group");
+			$location.path(apiRoot + "/group");
 		})		
 	}
 

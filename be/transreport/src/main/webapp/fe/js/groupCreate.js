@@ -22,7 +22,7 @@ angular.module('groupCreate',[])
 	    			url: apiRoot + '/createGroup',
 	    			data:{groupName: $scope.groupName}
 	    		}).then(function(res){
-	    			$location.path("/group");
+	    			$location.path(apiRoot + "/group");
 	    		},function(){
 
 	    		});
@@ -39,7 +39,7 @@ angular.module('groupCreate',[])
 	}
 	
 	$scope.backToGroup = function(){
-		$location.path("/group");
+		$location.path(apiRoot + "/group");
 	}
 
 })

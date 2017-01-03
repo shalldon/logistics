@@ -27,7 +27,7 @@ angular.module('login',[])
 			 }).then(function(res){
 				 var status = res.data.status;
 				 if(status == "SUCCESS"){
-					 $location.path("/role");
+					 $location.path(apiRoot + "/role");
 				 }			
 			 },function(){
 			 })
