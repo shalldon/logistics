@@ -24,7 +24,7 @@ angular.module('group',[])
 	var getGroupList = function(){
 		$http({
 			method: 'GET',
-			url: '/getGroups'
+			url: apiRoot + '/getGroups'
 		}).then(function(res){
 			$scope.groupList = res.data.responseBody;			
 		})

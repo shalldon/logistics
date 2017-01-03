@@ -8,7 +8,7 @@ angular.module('login',[])
 
 	$scope.getValidateCode = function(){
 		$http({method:'GET',
-			   url: '/requestValidateCode',
+			   url: apiRoot + '/requestValidateCode',
 			   params:{
 				   		phoneNumber : $scope.phoneNumber
 			   		}

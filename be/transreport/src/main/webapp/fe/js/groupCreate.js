@@ -19,7 +19,7 @@ angular.module('groupCreate',[])
 	      	this.ok = function(){
 	      		$http({
 	    			method: 'POST',
-	    			url: '/createGroup',
+	    			url: apiRoot + '/createGroup',
 	    			data:{groupName: $scope.groupName}
 	    		}).then(function(res){
 	    			$location.path("/group");
