@@ -15,11 +15,17 @@ angular.module('groupHome',[])
     $scope.saySomethingModal = modal;
   });
   
+  var details = $routeParams.id.split("?");
+  $scope.id = details[0];
+  var params = details[1].split("&");
+  $scope.users = params[0].split("=")[1];
+  $scope.groupName = params[1].split("=")[1];
+  
   $http({
 	  method:"GET",
 	  url:"/listAllEvents",
 	  params:{
-		  groupId : $routeParams.id
+		  groupId : $scope.id
 	  }
   }).then(function(res){
 	  var list = res.data.responseBody;
@@ -29,6 +35,9 @@ angular.module('groupHome',[])
 			  text : item.content
 		  })
 	  })
+	  if(res.data.error){
+		  $scope.error = res.data.error;
+	  }
   })
   
   $scope.sendSaySomthing = function(text) {

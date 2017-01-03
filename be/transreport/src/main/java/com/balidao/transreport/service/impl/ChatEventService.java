@@ -218,7 +218,7 @@ public class ChatEventService implements IChatEventService {
         chatEvent.setContent(content);
         chatEvent.setCreatedAt(LocalDateTime.now());
         chatEvent.setCreatedBy(user);
-        chatEvent.setEventType(ChatEventType.RED_ENVELOPE);
+        chatEvent.setEventType(ChatEventType.REPORT_POSITION);
         chatEvent.setGroup(group);
         chatEvent.setIsDeleted(Boolean.FALSE);
         chatEventDao.save(chatEvent);

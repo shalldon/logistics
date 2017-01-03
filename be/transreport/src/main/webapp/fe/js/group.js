@@ -40,8 +40,13 @@ angular.module('group',[])
 		$location.path("/groupCreate");
 	}
 
-	$scope.gotoGroup = function(id) {
-		$location.path(["/groupHome/",id].join(""));
+	$scope.gotoGroup = function(group) {
+		console.log(group)
+		var id=group.id;
+		var userLength = group.users.length;
+		var groupName = group.groupName;
+		var url = ["/groupHome/",id,"?users=",userLength,"&groupName=",groupName].join("")
+		$location.path(url);
   }
 	
 	$scope.back = function(){

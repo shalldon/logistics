@@ -26,8 +26,14 @@ angular.module('login',[])
 			   }
 			 }).then(function(res){
 				 var status = res.data.status;
+				 var body = res.data.responseBody;
 				 if(status == "SUCCESS"){
-					 $location.path("/role");
+					 if(!body.userRole){
+						 $location.path("/role");
+					 }else{
+						 $location.path("/group");
+					 }
+					 
 				 }			
 			 },function(){
 			 })

@@ -1,7 +1,7 @@
 <div>
     <div class="bar bar-header bar-assertive">
         <a class="button icon-left ion-chevron-left button-clear" ng-click="backToGroup()"></a>
-        <h1 class="title">凌志物流协同组 0001</h1>
+        <h1 class="title">{{groupName}}</h1>
         <a class="button icon-right ion-plus button-clear" ng-click="showAction()"></a>
     </div>
     <div class="content has-header">
@@ -9,11 +9,13 @@
             <div class="col col-20">
                 <i class="icon ion-information" />
             </div>
-            <div class="col col-30">协同号: 001</div>
-            <div class="col col-30">目前成员: 15人</div>
+            <div class="col col-30">协同号: {{id}}</div>
+            <div class="col col-30">目前成员: {{users}}人</div>
             <a class="button icon-right ion-chevron-right button-calm" ng-click="gotoInvite()">邀请</a>
         </div>
-        
+        <div ng-show="error" class="error-msg">
+        	{{error}}
+        </div>
          <div class="list">
             <div class="card" ng-repeat="msg in messages">
                 <div class="item item-divider">
