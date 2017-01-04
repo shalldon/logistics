@@ -4,6 +4,7 @@ angular.module('groupHome',[])
 .controller('groupHomeController',function($scope, $routeParams, $http, $injector, $ionicActionSheet, $ionicModal){
   console.log("access group/" + $routeParams.id);
   var $location = $injector.get("$location");
+  var $rootScope = $injector.get("$rootScope");
   
   $scope.message = {};
   $scope.messages = [];
@@ -20,6 +21,7 @@ angular.module('groupHome',[])
   var params = details[1].split("&");
   $scope.users = params[0].split("=")[1];
   $scope.groupName = params[1].split("=")[1];
+  $scope.user = $rootScope.user;
   
   $http({
 	  method:"GET",
@@ -27,12 +29,14 @@ angular.module('groupHome',[])
 	  params:{
 		  groupId : $scope.id
 	  }
-  }).then(function(res){
+  }).then(function(res){	  
 	  var list = res.data.responseBody;
 	  angular.forEach(list,function(item){
 		  $scope.messages.push({
+			  type : item.eventType == "REPORT_POSITION"?"location":"text",
 			  date : item.createdAt,
-			  text : item.content
+			  text : item.content,
+			  createBy: item.createdBy.id
 		  })
 	  })
 	  if(res.data.error){
@@ -40,9 +44,39 @@ angular.module('groupHome',[])
 	  }
   })
   
+  $scope.requireLocation = function(){
+	  console.log($rootScope.user)
+	  console.log($rootScope.group)
+	  var date = new Date();
+	  var group = $rootScope.group;
+	  var users = [];
+	  
+	  angular.forEach(group.users,function(user,i){
+		  users.push(user.id);
+	  });
+
+	  $http({
+		  method: 'POST',
+		  url: '/createPositionEvent',
+		  data:{
+			  content:'',
+			  groupId:group.id,
+			  userIds :users,
+			  hasRedEnvelop: false,
+			  totalValue:0,
+			  totalSize:0
+		  }
+	  }).then(function(){
+		  $scope.message.date = date.toDateString();	
+		  $scope.messages.push({
+			  type : "location",
+			  date : date.toDateString()
+		  })
+	  })
+  }
+  
   $scope.sendSaySomthing = function(text) {
     var date = new Date();
-    $scope.message.date = date.toDateString();	
 	 
 	$http({
 		method: "POST",
@@ -87,6 +121,7 @@ angular.module('groupHome',[])
         switch (index) {
           case GROUP_ACTIONS.SEND_LOCATION:
             console.log("Action: SEND LOCATION");
+            $scope.requireLocation();
             break;
           case GROUP_ACTIONS.SAY_SOMETHING:
             console.log("Action: SAY SOMETHING");
@@ -101,6 +136,8 @@ angular.module('groupHome',[])
       }
     });
   };
+  
+
   
   $scope.gotoInvite = function(){
 	  $location.path(["/userInvite/",$routeParams.id].join(""));

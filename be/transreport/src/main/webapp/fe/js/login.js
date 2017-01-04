@@ -5,6 +5,7 @@ angular.module('login',[])
 	
 	var $http = $injector.get("$http");
 	var $location = $injector.get("$location");
+	var $rootScope = $injector.get("$rootScope");
 
 	$scope.getValidateCode = function(){
 		$http({method:'GET',
@@ -27,6 +28,7 @@ angular.module('login',[])
 			 }).then(function(res){
 				 var status = res.data.status;
 				 var body = res.data.responseBody;
+				 $rootScope.user = body;
 				 if(status == "SUCCESS"){
 					 if(!body.userRole){
 						 $location.path("/role");

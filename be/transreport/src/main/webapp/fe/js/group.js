@@ -4,6 +4,7 @@ angular.module('group',[])
 .controller('groupController',function($scope, $http, $injector){
 
 	var $location = $injector.get("$location");
+	var $rootScope = $injector.get("$rootScope");
 
 //	$scope.groupList = [{
 //		label   : "林芝物流协同组1",
@@ -45,6 +46,8 @@ angular.module('group',[])
 		var id=group.id;
 		var userLength = group.users.length;
 		var groupName = group.groupName;
+		$rootScope.group = group;
+		
 		var url = ["/groupHome/",id,"?users=",userLength,"&groupName=",groupName].join("")
 		$location.path(url);
   }

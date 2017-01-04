@@ -22,6 +22,7 @@
     <body>
 		<div id="main-content" ng-view class="container-fluid view-content"></div>			
     </body>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=VWZ3o7s6jtLUd1hnbdv3doSP"></script>
 	<script src="/fe/bower_components/less/dist/less.js"></script>
 	<script src="/fe/node_modules/jquery/dist/jquery.js"></script>
 	<script src="/fe/node_modules/bootstrap/dist/js/bootstrap.js"></script>
@@ -37,4 +38,82 @@
     <script src="/fe/js/groupJoin.js"></script>
     <script src="/fe/js/groupHome.js"></script>
 	<script src="/fe/js/userInvite.js"></script>
+	
+	<script>
+	 var MapUtil = (function() {
+
+		    //关于状态码
+		    //BMAP_STATUS_SUCCESS	检索成功。对应数值“0”。
+		    //BMAP_STATUS_CITY_LIST	城市列表。对应数值“1”。
+		    //BMAP_STATUS_UNKNOWN_LOCATION	位置结果未知。对应数值“2”。
+		    //BMAP_STATUS_UNKNOWN_ROUTE	导航结果未知。对应数值“3”。
+		    //BMAP_STATUS_INVALID_KEY	非法密钥。对应数值“4”。
+		    //BMAP_STATUS_INVALID_REQUEST	非法请求。对应数值“5”。
+		    //BMAP_STATUS_PERMISSION_DENIED	没有权限。对应数值“6”。(自 1.1 新增)
+		    //BMAP_STATUS_SERVICE_UNAVAILABLE	服务不可用。对应数值“7”。(自 1.1 新增)
+		    //BMAP_STATUS_TIMEOUT	超时。对应数值“8”。(自 1.1 新增)
+
+		    const BAIDU_AK = 'VWZ3o7s6jtLUd1hnbdv3doSP';
+
+		    function queryAddress(location) {
+		      return new Promise(function(resolve, reject) {
+		        if (location.length === 0) {
+		          throw "location is incorrect.";
+		        }
+
+		        return $.ajax('http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=' +
+		          location[1] + ',' + location[0] + '&output=json&pois=1&ak=' + BAIDU_AK, {
+		          method: 'get',
+		          dataType: 'jsonp',
+		          success: function(data) {
+		            resolve(data);
+		          },
+		          error: function(error) {
+		            reject(error);
+		          }
+		        });
+		      });
+		    }
+
+		    function getCurrentLocation() {
+		      return new Promise(function(resolve, reject) {
+		        var geolocation = new BMap.Geolocation();
+
+		        geolocation.getCurrentPosition(function(r){
+		          if(this.getStatus() == BMAP_STATUS_SUCCESS){
+		            console.log("location:", r.point.lng, r.point.lat);
+		            resolve([r.point.lng, r.point.lat]);  // location := [ lng, lat ]
+		          }
+		          else {
+		            reject(this.getStatus());
+		          }
+		        },{enableHighAccuracy: true})
+		      });
+		    }
+
+		    function getAddressListByLocations(locations) {
+		      return new Promise(function(resolve, reject) {
+		        var addressListPromises = [];
+		        locations = locations || [];
+
+		        locations.forEach(function(location, index) {
+		          addressListPromises.push(queryAddress(location));
+		        });
+
+		        Promise.all(addressListPromises).then(function(dataList) {
+		          resolve(dataList.map(function(data) {
+		            return data.result.formatted_address;
+		          })).catch(function(reason) {
+		            reject(reason);
+		          });
+		        });
+		      });
+		    }
+
+		    return {
+		      getCurrentLocation: getCurrentLocation,
+		      getAddressListByLocations: getAddressListByLocations
+		    };
+		  })();
+	</script>
 </html>
