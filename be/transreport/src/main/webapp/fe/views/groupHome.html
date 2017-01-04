@@ -16,36 +16,38 @@
         <div ng-show="error" class="error-msg">
         	{{error}}
         </div>
-         <div class="list">
-            <div class="card" ng-repeat="msg in messages">
-                <div class="item item-divider">
-                    <i class="icon ion-flag" style="float:left;"></i>
-                    <div style="margin-left: 20px;">{{msg.user}}</div>
-                    <div style="margin-left: 20px;">{{msg.date}}</div>
-                </div>
-                <div ng-if="msg.type == 'location'" class="item item-text-wrap">
-                    <ul class="list">
-					    <div class="card" ng-repeat="location in locations[msg.id]">	
-				    		<div class="item item-divider">
-			                    <span>{{location}}</span>
-			                </div>
-			                <div class="item item-text-wrap">
-			                	<span>{{location}}</span>
-			                </div>
-					    </div>
-					</ul>
-					<button ng-if="user.id != msg.createBy"  ng-click="reportPosition(msg.id)" class="button button-block button-positive">
-					  上报位置
-					</button>
-					<button ng-if="user.id == msg.createBy" ng-click="refreshLocation(msg.id)" class="button button-block button-positive">
-					  刷新
-					</button>
-                </div>
-                <div ng-if="msg.type != 'location'" class="item item-text-wrap">
-                    {{msg.text}}
-                </div>
-            </div>
-        </div>
+        <ion-scroll>
+        	<div class="list">
+	            <div class="card" ng-repeat="msg in messages">
+	                <div class="item item-divider">
+	                    <i class="icon ion-flag" style="float:left;"></i>
+	                    <div style="margin-left: 20px;">{{msg.user}}</div>
+	                    <div style="margin-left: 20px;">{{msg.date}}</div>
+	                </div>
+	                <div ng-if="msg.type == 'location'" class="item item-text-wrap">
+	                    <ul class="list">
+						    <div class="card" ng-repeat="location in locations[msg.id]">	
+					    		<div class="item item-divider">
+				                    <span>{{location.answer.userName}}</span>
+				                </div>
+				                <div class="item item-text-wrap">
+				                	<span>{{location.address}}</span>
+				                </div>
+						    </div>
+						</ul>
+						<button ng-if="user.id != msg.createBy"  ng-click="reportPosition(msg.requestId)" class="button button-block button-positive">
+						  上报位置
+						</button>
+						<button ng-if="user.id == msg.createBy" ng-click="refreshLocation(msg.id)" class="button button-block button-positive">
+						  刷新
+						</button>
+	                </div>
+	                <div ng-if="msg.type != 'location'" class="item item-text-wrap">
+	                    {{msg.text}}
+	                </div>
+	            </div>
+        	</div>
+        </ion-scroll>       
     </div>
 
     <script id="say-something-modal.html" type="text/ng-template">

@@ -249,6 +249,7 @@ public class ChatEventService implements IChatEventService {
     @Transactional
     public ReportPositionActionDto reportPosition(Long requestId, BigDecimal positionX, BigDecimal positionY,
             String address, Long userId) throws TransreportException{
+        System.out.println(requestId + " >>> " + userId);
         ReportPositionAction pAction = reportPositionActionDao.findReportPositionAction(userId, requestId);
         if (pAction == null) {
             throw new TransreportException(TransreportExceptionType.NO_NEED_TO_REPORT_POSITION);

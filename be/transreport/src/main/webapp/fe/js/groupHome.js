@@ -40,7 +40,8 @@ angular.module('groupHome',[])
                   text: item.content,
                   createBy: item.createdBy.id,
                   id: item.id,
-                  user: item.createdBy.userName
+                  user: item.createdBy.userName,
+                  requestId: item.reportPositionRequest.id
               })
 
           })
@@ -60,8 +61,8 @@ angular.module('groupHome',[])
 	  var group = $rootScope.group;
 	  var users = [];
 	  
-	  angular.forEach(group.users,function(user,i){
-		  users.push(user.id);
+	  angular.forEach(group.users,function(userObj,i){
+		  users.push(userObj.user.id);
 	  });
 
 	  $http({
@@ -146,8 +147,10 @@ angular.module('groupHome',[])
       params:{
         eventId : id
       }
-    }).then(function(response){
-
+    }).then(function(res){
+    	var requests = res.data.responseBody.reportPositionRequest;
+    	$scope.locations[id]=requests.actions;
+    	$scope.answeredRequest = requests.answeredRequest;
     })
   }
 
