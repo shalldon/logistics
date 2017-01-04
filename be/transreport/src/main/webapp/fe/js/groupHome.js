@@ -22,27 +22,36 @@ angular.module('groupHome',[])
   $scope.users = params[0].split("=")[1];
   $scope.groupName = params[1].split("=")[1];
   $scope.user = $rootScope.user;
+
+
+  function loadMessages() {
+      $http({
+          method: "GET",
+          url: "/listAllEvents",
+          params: {
+              groupId: $scope.id
+          }
+      }).then(function(res) {
+          var list = res.data.responseBody;
+          angular.forEach(list, function(item) {
+              $scope.messages.push({
+                  type: item.eventType == "REPORT_POSITION" ? "location" : "text",
+                  date: item.createdAt,
+                  text: item.content,
+                  createBy: item.createdBy.id,
+                  id: item.id,
+                  user: item.createdBy.userName
+              })
+
+          })
+          if (res.data.error) {
+              $scope.error = res.data.error;
+          }
+      })
+  }
   
-  $http({
-	  method:"GET",
-	  url:"/listAllEvents",
-	  params:{
-		  groupId : $scope.id
-	  }
-  }).then(function(res){	  
-	  var list = res.data.responseBody;
-	  angular.forEach(list,function(item){
-		  $scope.messages.push({
-			  type : item.eventType == "REPORT_POSITION"?"location":"text",
-			  date : item.createdAt,
-			  text : item.content,
-			  createBy: item.createdBy.id
-		  })
-	  })
-	  if(res.data.error){
-		  $scope.error = res.data.error;
-	  }
-  })
+  loadMessages();
+  
   
   $scope.requireLocation = function(){
 	  console.log($rootScope.user)
@@ -67,11 +76,7 @@ angular.module('groupHome',[])
 			  totalSize:0
 		  }
 	  }).then(function(){
-		  $scope.message.date = date.toDateString();	
-		  $scope.messages.push({
-			  type : "location",
-			  date : date.toDateString()
-		  })
+		  loadMessages();
 	  })
   }
   
@@ -86,10 +91,7 @@ angular.module('groupHome',[])
 			groupId : $routeParams.id
 		}
 	}).then(function(){
-		$scope.messages.push({
-			text :text,
-			date : date.toDateString()
-		});
+		loadMessages();
 	})
 
     $scope.saySomethingModal.hide();
@@ -136,6 +138,41 @@ angular.module('groupHome',[])
       }
     });
   };
+
+  $scope.refreshLocation = function(id){
+    $http({
+      method : "GET",
+      url: "/getEvent",
+      params:{
+        eventId : id
+      }
+    }).then(function(response){
+
+    })
+  }
+
+  $scope.reportPosition = function(id){
+    MapUtil.getCurrentLocation().then(function(data) {
+      var location = data;
+      MapUtil.getAddressListByLocations([
+          data
+      ]).then(function(data) {
+          var address = data[0];
+          $http({
+            method : 'POST',
+            url: '/reportPosition',
+            data: {
+              requestId : id,
+              positionX: location[0],
+              positionY: location[1],
+              address: address
+            }
+          }).then(function(){
+
+          })
+      })
+    })
+  }
   
 
   

@@ -224,6 +224,7 @@ public class ChatEventService implements IChatEventService {
         chatEventDao.save(chatEvent);
         ReportPositionRequest reportPositionRequest = createReportPositionRequest(userIds, chatEvent);
         reportPositionRequestDao.save(reportPositionRequest);
+        chatEvent.setReportPostionRequest(reportPositionRequest);
         List<ReportPositionAction> actions = new ArrayList<ReportPositionAction>();
         for (Long uid : userIds) {
             User answerer = userDao.get(uid);

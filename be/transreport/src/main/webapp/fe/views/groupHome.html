@@ -19,8 +19,9 @@
          <div class="list">
             <div class="card" ng-repeat="msg in messages">
                 <div class="item item-divider">
-                    <i class="icon ion-flag"></i>
-                    <span>{{msg.date}}</span>
+                    <i class="icon ion-flag" style="float:left;"></i>
+                    <div style="margin-left: 20px;">{{msg.user}}</div>
+                    <div style="margin-left: 20px;">{{msg.date}}</div>
                 </div>
                 <div ng-if="msg.type == 'location'" class="item item-text-wrap">
                     <ul class="list">
@@ -33,10 +34,10 @@
 			                </div>
 					    </div>
 					</ul>
-					<button ng-if="user.id != msg.createBy" class="button button-block button-positive">
+					<button ng-if="user.id != msg.createBy"  ng-click="reportPosition(msg.id)" class="button button-block button-positive">
 					  上报位置
 					</button>
-					<button ng-if="user.id == msg.createBy" class="button button-block button-positive">
+					<button ng-if="user.id == msg.createBy" ng-click="refreshLocation(msg.id)" class="button button-block button-positive">
 					  刷新
 					</button>
                 </div>

@@ -6,21 +6,6 @@ angular.module('group',[])
 	var $location = $injector.get("$location");
 	var $rootScope = $injector.get("$rootScope");
 
-//	$scope.groupList = [{
-//		label   : "林芝物流协同组1",
-//		desc	: "协同号001",
-//		id		: 1
-//	},
-//	{
-//		label   : "林芝物流协同组2",
-//		desc	: "协同号001",
-//		id		: 2
-//	},
-//	{
-//		label   : "林芝物流协同组3",
-//		desc	: "协同号001",
-//		id		: 3
-//	}];
 	
 	var getGroupList = function(){
 		$http({

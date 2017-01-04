@@ -74,7 +74,7 @@ public class UserService implements IUserService {
         String validateCode = BigDecimal.valueOf(Math.random() * 9000 + 999).setScale(0, BigDecimal.ROUND_DOWN)
                 .toString();
         System.out.println(phoneNumber + " ==> " + validateCode + "   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        stringValueOperations.set(key, validateCode, 120, TimeUnit.SECONDS);
+        stringValueOperations.set(key, validateCode, 30, TimeUnit.SECONDS);
         // SMSUtil.sendValidateCode(phoneNumber, validateCode);
         return validateCode;
 
