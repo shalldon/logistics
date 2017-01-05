@@ -182,7 +182,6 @@ angular.module('groupHome',[])
               address: address
             }
           }).then(function(res){
-
             if(res.data.status == "SUCCESS"){
               $ionicPopup.alert({
                       title: 'Success',
@@ -191,10 +190,15 @@ angular.module('groupHome',[])
                   }).then(function() {
               })
             }else{
+ 
               if(res.data.error){
                 $scope.error=res.data.error;
               }
             }
+          },function(res){
+            if(res.data.error){
+                $scope.error=res.data.error;
+              }
           })
       })
     })

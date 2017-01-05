@@ -15,8 +15,10 @@ angular.module('login',[])
 			   params:{
 				   		phoneNumber : $scope.phoneNumber
 			   		}
-			  }).then(function(data){
-				  console.log(data)
+			  }).then(function(res){
+				  if(res.data.error){
+				  	$scope.error = res.data.error;
+				  }
 			  })
 	}
 	
@@ -40,7 +42,8 @@ angular.module('login',[])
 				 }else{
 				 	$scope.error = res.data.error;
 				 }	
-			 },function(){
+			 },function(res){
+			 		$scope.error = res.data.error;
 			 })
 	}
 
