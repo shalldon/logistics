@@ -7,6 +7,8 @@ angular.module('login',[])
 	var $location = $injector.get("$location");
 	var $rootScope = $injector.get("$rootScope");
 
+	$scope.error = '';
+
 	$scope.getValidateCode = function(){
 		$http({method:'GET',
 			   url: '/requestValidateCode',
@@ -34,9 +36,10 @@ angular.module('login',[])
 						 $location.path("/role");
 					 }else{
 						 $location.path("/group");
-					 }
-					 
-				 }			
+					 }					 
+				 }else{
+				 	$scope.error = res.data.error;
+				 }	
 			 },function(){
 			 })
 	}

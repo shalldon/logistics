@@ -5,9 +5,11 @@ angular.module('groupHome',[])
   console.log("access group/" + $routeParams.id);
   var $location = $injector.get("$location");
   var $rootScope = $injector.get("$rootScope");
+  var $ionicPopup = $injector.get("$ionicPopup");
   
   $scope.message = {};
   $scope.messages = [];
+  $scope.error = '';
 
   $ionicModal.fromTemplateUrl('/fe/templates/say-something-modal.html', {
     scope: $scope,
@@ -179,8 +181,20 @@ angular.module('groupHome',[])
               positionY: location[1],
               address: address
             }
-          }).then(function(){
+          }).then(function(res){
 
+            if(res.data.status == "SUCCESS"){
+              $ionicPopup.alert({
+                      title: 'Success',
+                      template: '上报成功，丫',
+                      okText: 'OK'
+                  }).then(function() {
+              })
+            }else{
+              if(res.data.error){
+                $scope.error=res.data.error;
+              }
+            }
           })
       })
     })
