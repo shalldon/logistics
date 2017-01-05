@@ -22,6 +22,7 @@ angular.module('groupHome',[])
   $scope.users = params[0].split("=")[1];
   $scope.groupName = params[1].split("=")[1];
   $scope.user = $rootScope.user;
+  $scope.locations = {};
 
 
   function loadMessages() {
@@ -149,7 +150,15 @@ angular.module('groupHome',[])
       }
     }).then(function(res){
     	var requests = res.data.responseBody.reportPositionRequest;
-    	$scope.locations[id]=requests.actions;
+      var locations = [];
+
+      for (var i = 0, len = requests.actions.length; i < len; i++) {
+        if(requests.actions[i].answeredOrder){
+          locations.push(requests.actions[i]);
+        }
+      }
+
+    	$scope.locations[id]=locations;
     	$scope.answeredRequest = requests.answeredRequest;
     })
   }

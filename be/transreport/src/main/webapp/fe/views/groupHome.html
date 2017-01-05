@@ -28,7 +28,8 @@
 	                    <ul class="list">
 						    <div class="card" ng-repeat="location in locations[msg.id]">	
 					    		<div class="item item-divider">
-				                    <span>{{location.answer.userName}}</span>
+				                    <div>{{location.answerer.userName}}</div>
+                                    <div>{{location.answeredAt}}</div>
 				                </div>
 				                <div class="item item-text-wrap">
 				                	<span>{{location.address}}</span>
