@@ -4,6 +4,7 @@
         <button class="button button-clear button-primary" ng-click="inviteUserModal.hide()">关闭</button>
     </ion-header-bar>
     <ion-content class="padding">
+        <div style="text-align: center; color:red;" ng-show="isError">手机不能为空</div>
         <div class="list">
             <label class="item item-input">
                 <input ng-model="user.userName" type="text" placeholder="用户名">

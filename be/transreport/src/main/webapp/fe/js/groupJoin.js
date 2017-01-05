@@ -4,6 +4,7 @@ angular.module('groupJoin',[])
 .controller('groupJoinController',function($scope, $http, $injector){
 	
 	var $location = $injector.get("$location");
+	var $ionicPopup = $injector.get("$ionicPopup");
 
 	var getGroupList = function(){
 		$http({
@@ -24,7 +25,13 @@ angular.module('groupJoin',[])
 				groupId : id
 			}
 		}).then(function(data){
-			console.log(data)
+      $ionicPopup.alert({
+        title: 'Success',
+        template: '成功加入协同组，丫',
+        okText: 'OK'
+      }).then(function() {
+        $scope.backToGroup();
+      })
 		})
 	}
 	

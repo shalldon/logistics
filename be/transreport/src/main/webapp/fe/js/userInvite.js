@@ -5,10 +5,13 @@ angular.module('userInvite',[])
 	
 	var $ionicModal = $injector.get("$ionicModal");
 	var $location = $injector.get("$location");
-	var groupId = $routeParams.id;
+	var urlParams = $routeParams.id;
+	var groupId = $routeParams.id.split('?')[0];
+	var $ionicPopup = $injector.get("$ionicPopup");
 	
 	$scope.users = [];
 	$scope.user = {};
+	$scope.isError = false;
 	
 	$ionicModal.fromTemplateUrl('/fe/templates/invite-user-modal.html', {
 	    scope: $scope,
@@ -19,7 +22,11 @@ angular.module('userInvite',[])
 
 	
 	$scope.addUser = function($ctrl){
-		
+		console.log($scope.user.phone)
+		if(!$scope.user.phone){
+			$scope.isError = true;
+			return;
+		}
 		$scope.users.push({
 			userName: $scope.user.userName,
 			phone :$scope.user.phone
@@ -29,6 +36,7 @@ angular.module('userInvite',[])
 	}
 	
 	$scope.invite = function(){
+		$scope.isError = false;
 		$scope.inviteUserModal.show();
 	}
 	
@@ -57,12 +65,20 @@ angular.module('userInvite',[])
 				phoneList: phoneList
 			}
 		}).then(function(){
+
+		 $ionicPopup.alert({
+       title: 'Success',
+       template: '邀请成功，丫',
+       okText: 'OK'
+     }).then(function(){
+     	$scope.back();
+     })
 			
 		})
 	}
 	
 	$scope.back = function(){
-		$location.path(["/groupHome/",groupId].join(""));
+		$location.path(["/groupHome/",urlParams].join(""));
 	}
 
 })
