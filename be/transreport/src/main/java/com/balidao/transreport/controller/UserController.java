@@ -162,7 +162,7 @@ public class UserController {
         GroupDto groupDto = userService.inviteUsersToGroup(user, inviteUserDto.getPhoneList(),
                 inviteUserDto.getGroupId());
 
-        SMSUtil.invateUserToGroup(inviteUserDto.getPhoneList(), user, groupDto);
+        SMSUtil.inviteUserToGroup(inviteUserDto.getPhoneList(), user, groupDto);
         return CommonResponse.success();
     }
 

@@ -29,9 +29,7 @@ import com.balidao.transreport.dto.UserDto;
 public class SMSUtil {
 
     public static void sendValidateCode(String phoneNumber, String validateCode) {
-        System.out.println(phoneNumber + " ==> " + validateCode);
-        System.out.println(
-                singleSend("【oTMS传跑】您的验证码是#code#。如非本人操作，请忽略本短信".replaceAll("#code#", validateCode), phoneNumber));
+        singleSend("【oTMS传跑】您的验证码是#code#。如非本人操作，请忽略本短信".replaceAll("#code#", validateCode), phoneNumber);
     }
 
     public static void sendJoinGroup(User user, Group group) {
@@ -43,9 +41,19 @@ public class SMSUtil {
                 + (isApprove ? "approved" : "disapprove"));
     }
 
-    public static void invateUserToGroup(List<String> phoneList, UserDto user, GroupDto group) {
-        System.out.println(user.getUserName() + " invate u to join " + group.getGroupName());
+    public static void inviteUserToGroup(List<String> phoneList, UserDto user, GroupDto group) {
+        String username = user.getUserName() != null ? user.getUserName() : user.getPhoneNumber();
+        for (String phone : phoneList) {
+            singleSend("【oTMS传跑】#str1#邀请您加入[传跑]，组号：#str2#点这里加入：http://chuanpao.otms.com".replaceAll("#str1#", username)
+                    .replaceAll("#str2#", group.getGroupName() + " "), phone);
+        }
     };
+
+    public static void reportPosition(List<String> phoneList, String userName) {
+        for (String phone : phoneList) {
+            singleSend("【oTMS传跑】#str1#向您发出位置邀请，点这里上传位置：http://chuanpao.otms.com".replaceAll("#str1#", userName), phone);
+        }
+    }
 
     private static String singleSend(String text, String mobile) {
         Map<String, String> params = new HashMap<String, String>();
@@ -64,7 +72,12 @@ public class SMSUtil {
         body = invoke(httpclient, post);
 
         httpclient.getConnectionManager().shutdown();
-
+        
+        System.out.println("================================");
+        System.out.println("sending message to: " + params.get("mobile"));
+        System.out.println(params.get("text"));
+        System.out.println(body);
+        System.out.println("================================");
         return body;
     }
 
