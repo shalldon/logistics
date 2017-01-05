@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.balidao.transreport.common.Constants;
+import com.balidao.transreport.common.SMSUtil;
 import com.balidao.transreport.dao.IChatEventDao;
 import com.balidao.transreport.dao.IGroupDao;
 import com.balidao.transreport.dao.IGroupUserDao;
@@ -214,6 +215,7 @@ public class ChatEventService implements IChatEventService {
                 throw new TransreportException(TransreportExceptionType.NOT_ENOUGH_POINTS);
             }
         }
+        List<String> phoneList = new ArrayList<String>();
         ChatEvent chatEvent = new ChatEvent();
         chatEvent.setContent(content);
         chatEvent.setCreatedAt(LocalDateTime.now());
@@ -233,6 +235,7 @@ public class ChatEventService implements IChatEventService {
             reportPositionAction.setRequest(reportPositionRequest);
             reportPositionActionDao.save(reportPositionAction);
             actions.add(reportPositionAction);
+            phoneList.add(answerer.getPhoneNumber());
         }
         reportPositionRequest.setActions(actions);
         if (hasRedEnvelop) {
@@ -242,6 +245,8 @@ public class ChatEventService implements IChatEventService {
             user.setPoints(user.getPoints() - totalValue);
             userDao.save(user);
         }
+        String username = user.getUserName() != null ? user.getUserName() : user.getPhoneNumber();
+        SMSUtil.reportPosition(phoneList, username);
         return ChatEventParser.fromDomainToDto(chatEvent);
     }
 
